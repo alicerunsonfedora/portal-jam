@@ -15,6 +15,7 @@
 		BF1ABC8B234E78D50095E5DC /* CONTRIBUTING.md in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC89234E78D50095E5DC /* CONTRIBUTING.md */; };
 		BF1ABC8C234E78D50095E5DC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC8A234E78D50095E5DC /* README.md */; };
 		BF5C17D2235398500026C1C2 /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BF5C17D1235398500026C1C2 /* MyScene.sks */; };
+		BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */; };
 		BFBDCF5423538DBD005A5E20 /* PortalElements.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFBDCF5323538DBD005A5E20 /* PortalElements.sks */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		BF1ABC89234E78D50095E5DC /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		BF1ABC8A234E78D50095E5DC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BF5C17D1235398500026C1C2 /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
+		BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestchamberScene.swift; sourceTree = "<group>"; };
 		BFBDCF5323538DBD005A5E20 /* PortalElements.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PortalElements.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,17 +67,34 @@
 		BF1ABC72234E78040095E5DC /* Portals in Cupertino */ = {
 			isa = PBXGroup;
 			children = (
-				BF1ABC73234E78040095E5DC /* AppDelegate.swift */,
-				BF1ABC79234E78040095E5DC /* GameScene.swift */,
-				BF1ABC7B234E78040095E5DC /* ViewController.swift */,
+				BFAFB7AB2353D45A008249FC /* Classes */,
+				BFAFB7AA2353D44C008249FC /* Testchambers */,
 				BF1ABC7D234E78090095E5DC /* Assets.xcassets */,
 				BF1ABC7F234E78090095E5DC /* Main.storyboard */,
 				BF1ABC82234E78090095E5DC /* Info.plist */,
 				BF1ABC83234E78090095E5DC /* Portals_in_Cupertino.entitlements */,
 				BFBDCF5323538DBD005A5E20 /* PortalElements.sks */,
-				BF5C17D1235398500026C1C2 /* MyScene.sks */,
 			);
 			path = "Portals in Cupertino";
+			sourceTree = "<group>";
+		};
+		BFAFB7AA2353D44C008249FC /* Testchambers */ = {
+			isa = PBXGroup;
+			children = (
+				BF5C17D1235398500026C1C2 /* MyScene.sks */,
+			);
+			path = Testchambers;
+			sourceTree = "<group>";
+		};
+		BFAFB7AB2353D45A008249FC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */,
+				BF1ABC73234E78040095E5DC /* AppDelegate.swift */,
+				BF1ABC79234E78040095E5DC /* GameScene.swift */,
+				BF1ABC7B234E78040095E5DC /* ViewController.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */,
+				BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */,
 				BF1ABC7A234E78040095E5DC /* GameScene.swift in Sources */,
 				BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */,
 			);
