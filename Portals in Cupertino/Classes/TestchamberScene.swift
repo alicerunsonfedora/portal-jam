@@ -66,8 +66,8 @@ class TestchamberScene: SKScene {
                     newTileNode.position = CGPoint(x: nodeX, y: nodeY)
                     newTileNode.zPosition = 1
                     
+                    // Add the lighting mask
                     newTileNode.lightingBitMask = 0b0001
-                    newTileNode.shadowCastBitMask = 0b0001
                     
                     // Assign a physics body to the node and change its properties.
                     newTileNode.physicsBody = SKPhysicsBody(texture: firstTexture,
