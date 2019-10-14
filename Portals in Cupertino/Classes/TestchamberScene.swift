@@ -9,15 +9,16 @@
 import Foundation
 import SpriteKit
 import GameplayKit
-
+import Carbon.HIToolbox
 class TestchamberScene: SKScene {
     
     // MARK: Attributes
     
     var exitDoor: SKSpriteNode?
     var walls: [SKSpriteNode]?
-    var playerNode: SKSpriteNode?
+    var playerNode: Player?
     var inputs: [SKSpriteNode]?
+    var cameraNode: SKCameraNode?
     
     // MARK: Tile Map Configurations
     
@@ -51,8 +52,14 @@ class TestchamberScene: SKScene {
                     let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
                     let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
                     
-                    // Create a new node with the tile's texture
-                    let newTileNode = SKSpriteNode(texture: firstTexture)
+                    // Create a new node with the tile's texture. If it's a player,
+                    // use the Player class instead.
+                    var newTileNode = SKSpriteNode(texture: firstTexture)
+                    
+                    if (TestchamberStructure.getElementType(byDefinition: tileDefinition.name!) == .testSubject) {
+                        newTileNode = Player(texture: firstTexture)
+                    }
+
                     newTileNode.isHidden = false
                     
                     // Place the node at the calculated position
@@ -74,7 +81,7 @@ class TestchamberScene: SKScene {
                     newTileNode.physicsBody?.friction = 0.7
                     
                     // Check the tile node's definition and create the respective objects.
-                    switch (TestchamberStructure.getElementType(byDefinition: tileDefinition.name ?? "")) {
+                    switch (TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)) {
                     
                     // Doors: Attach as the exit door
                     case .door:
@@ -83,7 +90,7 @@ class TestchamberScene: SKScene {
                         
                     // Players: Assign the player node
                     case .testSubject:
-                        self.playerNode = newTileNode
+                        self.playerNode = newTileNode as? Player
                         break
                         
                     // Buttons: Assign the button to the list of inputs
@@ -119,10 +126,44 @@ class TestchamberScene: SKScene {
     
     // MARK: Overrides
     
+    //for mouse interaction
+    /*
+    override func mouseDown(with event: NSEvent) {
+        print("Firing!")
+        let location = event.location(in: self)
+        playerNode?.run(playerNode!.moveUp)
+        cameraNode?.run(playerNode!.moveUp)
+        //self.playerNode?.position = location
+       // let touchedNode = atPoint(location)
+        
+        //print(touchedNode == playerNode)
+    }*/
+    
+    override func keyDown(with event: NSEvent) {
+        switch Int(event.keyCode){
+        case kVK_LeftArrow:
+            playerNode?.run(playerNode!.moveLeft)
+            self.cameraNode?.run(playerNode!.moveLeft)
+        case kVK_RightArrow:
+            playerNode?.run(playerNode!.moveRight)
+            self.cameraNode?.run(playerNode!.moveRight)
+        case kVK_UpArrow:
+            playerNode?.run(playerNode!.moveUp)
+            self.cameraNode?.run(playerNode!.moveUp)
+        case kVK_DownArrow:
+            playerNode?.run(playerNode!.moveDown)
+            self.cameraNode?.run(playerNode!.moveDown)
+        default:
+            break;
+        }
+    }
+    
     override func didMove(to view: SKView) {
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
             fatalError("Room layout is missing. Aborting...")
         }
         self.configureLayoutFromTilemap(roomLayout)
+        
+        self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
     }
 }

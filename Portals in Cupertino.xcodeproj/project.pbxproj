@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA30E2354F617005A4A26 /* TestElement.swift */; };
+		98613EFA2354E116005CBA66 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98613EF92354E116005CBA66 /* Player.swift */; };
 		BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC73234E78040095E5DC /* AppDelegate.swift */; };
 		BF1ABC7A234E78040095E5DC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC79234E78040095E5DC /* GameScene.swift */; };
 		BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC7B234E78040095E5DC /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		BF0DA30E2354F617005A4A26 /* TestElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestElement.swift; sourceTree = "<group>"; };
+		98613EF92354E116005CBA66 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		BF1ABC70234E78040095E5DC /* Portals in Cupertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Portals in Cupertino.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF1ABC73234E78040095E5DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF1ABC79234E78040095E5DC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				BF1ABC73234E78040095E5DC /* AppDelegate.swift */,
 				BF1ABC79234E78040095E5DC /* GameScene.swift */,
 				BF1ABC7B234E78040095E5DC /* ViewController.swift */,
+				98613EF92354E116005CBA66 /* Player.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */,
 				BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */,
 				BF1ABC7A234E78040095E5DC /* GameScene.swift in Sources */,
+				98613EFA2354E116005CBA66 /* Player.swift in Sources */,
 				BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
