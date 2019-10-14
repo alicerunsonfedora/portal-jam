@@ -17,7 +17,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let scene = GKScene(fileNamed: "MyScene") {
+        if let scene = GKScene(fileNamed: "Sample") {
             
             // Get the SKScene from the loaded GKScene
             if let sceneNode = scene.rootNode as! SKScene? {
