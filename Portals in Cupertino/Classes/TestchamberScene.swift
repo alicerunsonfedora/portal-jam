@@ -37,13 +37,6 @@ class TestchamberScene: SKScene {
         let halfHeight = CGFloat(map.numberOfRows) / 2.0 * tileMapSize.height
         let tileMapPosition = map.position
         
-        // Create the appropriate door textures (used to track the type of obstructions) and player texture
-        let metalDoorTexture = SKTexture(imageNamed: "Metal_Wall_With_Door")
-        let concreteDoorTexture = SKTexture(imageNamed: "Concrete_Wall_with_Door")
-        let playerTexture = SKTexture(imageNamed: "Player")
-        let metalButtonTexture = SKTexture(imageNamed: "Metal_Button")
-        let concreteButtonTexture = SKTexture(imageNamed: "Concrete_Button")
-        
         // Iterate over every item in the tile map
         for y in 0 ..< map.numberOfColumns {
             for x in 0 ..< map.numberOfRows {
@@ -80,36 +73,34 @@ class TestchamberScene: SKScene {
                     newTileNode.physicsBody?.allowsRotation = false // Doesn't rotate
                     newTileNode.physicsBody?.friction = 0.7
                     
-                    // Check the tile node's texture. If it's a player or door, treat it differently.
-                    if (newTileNode.texture != nil) {
-                        switch (newTileNode.texture) {
-                        // Doors: Assign it as the exit door
-                        case (metalDoorTexture):
-                            self.exitDoor = newTileNode
-                            break;
-                        case (concreteDoorTexture):
-                            self.exitDoor = newTileNode
-                            break;
-                        // Buttons: Assign them as inputs
-                        case (metalButtonTexture):
-                            newTileNode.zPosition = 0
-                            self.inputs?.append(newTileNode)
-                            break;
-                        case (concreteButtonTexture):
-                            newTileNode.zPosition = 0
-                            self.inputs?.append(newTileNode)
-                            break;
-                        // Player: Assign it as the player
-                        case (playerTexture):
-                            newTileNode.physicsBody?.isDynamic = true
-                            self.playerNode = newTileNode
-                            break;
-                        // Walls: Add it to list of walls
-                        default:
-                            self.walls?.append(newTileNode)
-                            break;
-                        }
+                    // Check the tile node's definition and create the respective objects.
+                    switch (TestchamberStructure.getElementType(byDefinition: tileDefinition.name ?? "")) {
+                    
+                    // Doors: Attach as the exit door
+                    case .door:
+                        self.exitDoor = newTileNode
+                        break
+                        
+                    // Players: Assign the player node
+                    case .testSubject:
+                        self.playerNode = newTileNode
+                        break
+                        
+                    // Buttons: Assign the button to the list of inputs
+                    case .button:
+                        self.inputs?.append(newTileNode)
+                        break
+                        
+                    // Unknown: Disregard.
+                    case .unknown:
+                        break
+                        
+                    // Default (wall): Add to list of walls.
+                    default:
+                        self.walls?.append(newTileNode)
+                        break
                     }
+                    
                     
                     // Add the node as a child
                     self.addChild(newTileNode)
