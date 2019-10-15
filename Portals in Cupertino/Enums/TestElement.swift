@@ -19,6 +19,12 @@ enum TestElement {
 
 struct TestchamberStructure {
     
+    /**
+     Get the respective testing element from a tile definition.
+     - Parameters:
+        - byDefinition: The `SKTileDefinition` name to check against.
+     - Returns: The corresponding `TestElement` enumeration
+     */
     static func getElementType(byDefinition: String) -> TestElement {
         switch byDefinition {
         case "Metal_Wall":

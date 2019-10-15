@@ -115,6 +115,7 @@ class TestchamberScene: SKScene {
         
         // Remove the tilemap
         map.removeFromParent()
+        
     }
     
     // MARK: Overrides

@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */; };
 		BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA30E2354F617005A4A26 /* TestElement.swift */; };
+		BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA31023550FED005A4A26 /* TestInputTypes.swift */; };
 		BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC73234E78040095E5DC /* AppDelegate.swift */; };
-		BF1ABC7A234E78040095E5DC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC79234E78040095E5DC /* GameScene.swift */; };
 		BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC7B234E78040095E5DC /* ViewController.swift */; };
 		BF1ABC7E234E78090095E5DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC7D234E78090095E5DC /* Assets.xcassets */; };
 		BF1ABC81234E78090095E5DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC7F234E78090095E5DC /* Main.storyboard */; };
@@ -21,10 +22,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInputElement.swift; sourceTree = "<group>"; };
 		BF0DA30E2354F617005A4A26 /* TestElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestElement.swift; sourceTree = "<group>"; };
+		BF0DA31023550FED005A4A26 /* TestInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInputTypes.swift; sourceTree = "<group>"; };
 		BF1ABC70234E78040095E5DC /* Portals in Cupertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Portals in Cupertino.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF1ABC73234E78040095E5DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BF1ABC79234E78040095E5DC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		BF1ABC7B234E78040095E5DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BF1ABC7D234E78090095E5DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF1ABC80234E78090095E5DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,8 +96,8 @@
 			children = (
 				BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */,
 				BF1ABC73234E78040095E5DC /* AppDelegate.swift */,
-				BF1ABC79234E78040095E5DC /* GameScene.swift */,
 				BF1ABC7B234E78040095E5DC /* ViewController.swift */,
+				BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				BF0DA30E2354F617005A4A26 /* TestElement.swift */,
+				BF0DA31023550FED005A4A26 /* TestInputTypes.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -185,7 +188,8 @@
 				BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */,
 				BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */,
 				BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */,
-				BF1ABC7A234E78040095E5DC /* GameScene.swift in Sources */,
+				BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */,
+				BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */,
 				BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
