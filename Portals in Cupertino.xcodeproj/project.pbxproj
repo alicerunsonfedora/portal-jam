@@ -12,6 +12,7 @@
 		BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA31023550FED005A4A26 /* TestInputTypes.swift */; };
 		BF1968F623556B23004E25B0 /* AntlineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968F523556B23004E25B0 /* AntlineType.swift */; };
 		BF1968F923556B5A004E25B0 /* Testchamber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968F823556B5A004E25B0 /* Testchamber.swift */; };
+		98613EFA2354E116005CBA66 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98613EF92354E116005CBA66 /* Player.swift */; };
 		BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC73234E78040095E5DC /* AppDelegate.swift */; };
 		BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC7B234E78040095E5DC /* ViewController.swift */; };
 		BF1ABC7E234E78090095E5DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC7D234E78090095E5DC /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		BF0DA31023550FED005A4A26 /* TestInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInputTypes.swift; sourceTree = "<group>"; };
 		BF1968F523556B23004E25B0 /* AntlineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntlineType.swift; sourceTree = "<group>"; };
 		BF1968F823556B5A004E25B0 /* Testchamber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testchamber.swift; sourceTree = "<group>"; };
+		98613EF92354E116005CBA66 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		BF1ABC70234E78040095E5DC /* Portals in Cupertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Portals in Cupertino.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF1ABC73234E78040095E5DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF1ABC7B234E78040095E5DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				BF1ABC73234E78040095E5DC /* AppDelegate.swift */,
 				BF1ABC7B234E78040095E5DC /* ViewController.swift */,
 				BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */,
+				98613EF92354E116005CBA66 /* Player.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -206,6 +209,8 @@
 				BF1968F623556B23004E25B0 /* AntlineType.swift in Sources */,
 				BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */,
 				BF1968F923556B5A004E25B0 /* Testchamber.swift in Sources */,
+				BF1ABC7A234E78040095E5DC /* GameScene.swift in Sources */,
+				98613EFA2354E116005CBA66 /* Player.swift in Sources */,
 				BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
