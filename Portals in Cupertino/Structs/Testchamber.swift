@@ -46,19 +46,10 @@ struct TestchamberStructure {
         - byDefinition: The `SKTileDefinition` name to check against.
      - Returns: The corresponding type as an `AntlineType` enumeration.
      */
+    
+    @available(swift, deprecated: 1.0.0, message: "Has been moved to Antline.getAntlineType")
     static func getAntlineType(byDefinition: String) -> AntlineType {
-        let antline = byDefinition.replacingOccurrences(of: "_Active", with: "")
-        
-        switch antline {
-        case "Antline_Line":
-            return .line
-        case "Antline_Cross":
-            return .cross
-        case "Antline_Corner":
-            return .corner
-        default:
-            return .line
-        }
+        return Antline.getAntlineType(byDefinition: byDefinition)
     }
     
 }

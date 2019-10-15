@@ -12,7 +12,7 @@ import SpriteKit
 class TestOutputElement {
     
     private var inputs: [TestInputElement]
-    private var textureName: String?
+    var textureName: String?
     var elementNode: SKSpriteNode
     
     /**

@@ -23,6 +23,7 @@
 		BF79949923565F1E006F95C3 /* TestWeightedButtonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */; };
 		BF79949D2356628F006F95C3 /* TestOutputElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79949C2356628F006F95C3 /* TestOutputElement.swift */; };
 		BF7994A4235667F6006F95C3 /* TestAntlineElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7994A3235667F6006F95C3 /* TestAntlineElement.swift */; };
+		BF7994A623566BD7006F95C3 /* TestDoorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7994A523566BD7006F95C3 /* TestDoorElement.swift */; };
 		BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */; };
 		BFBDCF5423538DBD005A5E20 /* PortalElements.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFBDCF5323538DBD005A5E20 /* PortalElements.sks */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedButtonElement.swift; sourceTree = "<group>"; };
 		BF79949C2356628F006F95C3 /* TestOutputElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOutputElement.swift; sourceTree = "<group>"; };
 		BF7994A3235667F6006F95C3 /* TestAntlineElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAntlineElement.swift; sourceTree = "<group>"; };
+		BF7994A523566BD7006F95C3 /* TestDoorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDoorElement.swift; sourceTree = "<group>"; };
 		BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestchamberScene.swift; sourceTree = "<group>"; };
 		BFBDCF5323538DBD005A5E20 /* PortalElements.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PortalElements.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +121,7 @@
 				BF7994A02356659D006F95C3 /* Base Elements */,
 				BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */,
 				BF7994A3235667F6006F95C3 /* TestAntlineElement.swift */,
+				BF7994A523566BD7006F95C3 /* TestDoorElement.swift */,
 			);
 			path = "Test Elements";
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				BF79949923565F1E006F95C3 /* TestWeightedButtonElement.swift in Sources */,
 				BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */,
 				BF1968F923556B5A004E25B0 /* Testchamber.swift in Sources */,
+				BF7994A623566BD7006F95C3 /* TestDoorElement.swift in Sources */,
 				98613EFA2354E116005CBA66 /* Player.swift in Sources */,
 				BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */,
 			);

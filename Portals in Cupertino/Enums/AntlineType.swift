@@ -13,3 +13,13 @@ enum AntlineType {
     case corner
     case cross
 }
+
+enum AntlineDirection {
+    case horizontal
+    case vertical
+    case leftToTop
+    case topToRight
+    case leftToBottom
+    case bottomToRight
+    case none
+}

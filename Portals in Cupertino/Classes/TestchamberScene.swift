@@ -15,10 +15,11 @@ class TestchamberScene: SKScene {
     
     // MARK: Attributes
     
-    var exitDoor: SKSpriteNode?
+    var exitDoor: TestDoorElement?
     var walls: [SKSpriteNode]?
     var playerNode: Player?
     var inputs: [TestInputElement]?
+    var outputs: [TestOutputElement]?
     var cameraNode: SKCameraNode?
     
     // MARK: Tile Map Configurations
@@ -125,6 +126,11 @@ class TestchamberScene: SKScene {
         
     }
     
+    /**
+     Takes a schematic and adds any inputs and outputs to the current layout.
+     - Parameters:
+        - map: The `SKTileMapNode` to "parse" as a set of inputs and outputs.
+     */
     func configureInputSchematic(_ map: SKTileMapNode) {
         
         // Set some constants
@@ -132,11 +138,57 @@ class TestchamberScene: SKScene {
         let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * tileMapSize.width
         let halfHeight = CGFloat(map.numberOfRows) / 2.0 * tileMapSize.height
         let tileMapPosition = map.position
+        let isExitLayout = map.name?.contains("exitLayout")
         
         // Grab the antline tilemap, if it exists.
-        guard let antlineTilemap = childNode(withName: map.name! + "_antlines") as! SKTileMapNode? else {
+        guard let antlineTilemap = map.childNode(withName: map.name! + "_antlines") as! SKTileMapNode? else {
             fatalError("Antline connections to this map are missing. Aborting...")
         }
+        
+        // Create an empty antline array and input/output array.
+        var antlines = [Antline]()
+        var inputs = [TestInputElement]()
+        var outputs = [TestOutputElement]()
+        
+        //Iterate over every antline element
+        for antlineY in 0 ..< antlineTilemap.numberOfColumns {
+            for antlineX in 0 ..< antlineTilemap.numberOfRows {
+                if let antlineDefinition = antlineTilemap.tileDefinition(atColumn: antlineX, row: antlineY) {
+                    // Get the antline type.
+                    let antlineType = Antline.getAntlineType(byDefinition: antlineDefinition.name!)
+                                                            
+                    // Gather the textures
+                    let antlineTextures = antlineDefinition.textures
+                    let antlineTexture = antlineTextures[0]
+                    
+                    // Calculate the tile's position
+                    let antlineX = CGFloat(antlineX) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+                    let antlineY = CGFloat(antlineY) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+                    
+                    // Create the new node.
+                    let antlineNode = SKSpriteNode(texture: antlineTexture)
+                    
+                    // Set some basic properties.
+                    antlineNode.isHidden = false
+                    antlineNode.position = CGPoint(x: antlineX, y: antlineY)
+                    antlineNode.zPosition = 0
+                    antlineNode.lightingBitMask = 0b0001
+                    
+                    // Create a new Antline object and add it to the antline list.
+                    let newAntline = Antline(inputs: [],
+                                             node: antlineNode,
+                                             type: antlineType,
+                                             direction: Antline.determineAntlineDirection(tileDefinition: antlineDefinition))
+                    antlines.append(newAntline)
+                    self.addChild(antlineNode)
+                                        
+                    // Fix the position again
+                    antlineNode.position = CGPoint(x: antlineNode.position.x + tileMapPosition.x,
+                                                   y: antlineNode.position.y + tileMapPosition.y)
+                }
+            }
+        }
+        
         
         // Iterate over every item in the parent tilemap.
         for y in 0 ..< map.numberOfColumns {
@@ -164,11 +216,56 @@ class TestchamberScene: SKScene {
                     newTileNode.zPosition = 0
                     newTileNode.lightingBitMask = 0b0001
                     
-                }
+                    switch elementType {
+                    case .door:
+                        if isExitLayout! {
+                            if self.exitDoor == nil {
+                                self.exitDoor = TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal"))
+                            }
+                        } else {
+                            outputs.append(TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal")))
+                        }
+                        break
+                    case .weightedButton:
+                        var button: TestWeightedButtonElement?
+                        
+                        if isExitLayout! {
+                            button = TestWeightedButtonElement(connectsTo: .toExit, node: newTileNode, antlines: antlines)
+                            self.exitDoor?.addInput(button!)
+                        } else {
+                            button = TestWeightedButtonElement(connectsTo: .toElement, node: newTileNode, antlines: antlines)
+                        }
+                        
+                        inputs.append(button!)
+                        for antline in antlines {
+                            antline.addInput(button!)
+                        }
+                        
+                        for output in outputs {
+                            output.addInput(button!)
+                        }
+                        break
+                    default:
+                        break
+                    }
+                                        
+                    self.addChild(newTileNode)
+                    
+                    // Fix the position again
+                    newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,
+                                                   y: newTileNode.position.y + tileMapPosition.y)
+                    }
                 
             }
         }
         
+        // Add the inputs and outputs
+        self.inputs = (self.inputs ?? []) + inputs
+        self.outputs = (self.outputs ?? []) + outputs
+        
+        // Finally, remove the tilemaps
+        antlineTilemap.removeFromParent()
+        map.removeFromParent()
     }
     
     // MARK: Overrides
@@ -212,6 +309,10 @@ class TestchamberScene: SKScene {
             fatalError("Room layout is missing. Aborting...")
         }
         self.configureLayoutFromTilemap(roomLayout)
+        
+        for layout in children.filter({ ($0.name?.starts(with: "input_") ?? false) }) {
+            self.configureInputSchematic((layout as? SKTileMapNode)!)
+        }
         
         self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
         
