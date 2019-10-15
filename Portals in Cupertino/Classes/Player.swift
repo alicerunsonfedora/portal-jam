@@ -11,8 +11,10 @@ import SpriteKit
 
 class Player: SKSpriteNode {
     
-    let moveRight = SKAction.moveBy(x: 5, y: 0, duration: 0.5)
-    let moveLeft = SKAction.moveBy(x: -5, y: 0, duration: 0.5)
-    let moveUp = SKAction.moveBy(x: 0, y: 5, duration: 0.5)
-    let moveDown = SKAction.moveBy(x: 0, y: -5, duration: 0.5)
+    //let moveRight = SKAction.moveBy(x: 5, y: 0, duration: 0.5)
+    //let moveLeft = SKAction.moveBy(x: -5, y: 0, duration: 0.5)
+    let moveUp = SKAction.moveBy(x: 0, y: 5, duration: 0)
+    let moveDown = SKAction.moveBy(x: 0, y: -5, duration: 0)
+    let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
+    let rotateRight = SKAction.rotate(byAngle: -(.pi/4), duration: 0)
 }

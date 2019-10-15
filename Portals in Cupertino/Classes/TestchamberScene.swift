@@ -89,8 +89,16 @@ class TestchamberScene: SKScene {
                         break
                         
                     // Players: Assign the player node
+                    //          And physics specific to player
                     case .testSubject:
                         self.playerNode = newTileNode as? Player
+                        self.playerNode?.physicsBody?.restitution = 0
+                        self.playerNode?.physicsBody?.isDynamic = true
+                        self.playerNode?.physicsBody?.affectedByGravity = false
+                        self.playerNode?.physicsBody?.friction = 0.2
+                        self.playerNode?.physicsBody?.linearDamping = 0.1
+                        self.playerNode?.physicsBody?.angularDamping = 0.1
+                        self.playerNode?.physicsBody?.mass = 50
                         break
                         
                     // Buttons: Assign the button to the list of inputs
@@ -142,22 +150,24 @@ class TestchamberScene: SKScene {
     override func keyDown(with event: NSEvent) {
         switch Int(event.keyCode){
         case kVK_LeftArrow:
-            playerNode?.run(playerNode!.moveLeft)
-            self.cameraNode?.run(playerNode!.moveLeft)
+            playerNode?.run(playerNode!.rotateLeft)
+            //self.cameraNode?.run(playerNode!.moveLeft)
         case kVK_RightArrow:
-            playerNode?.run(playerNode!.moveRight)
-            self.cameraNode?.run(playerNode!.moveRight)
+            playerNode?.run(playerNode!.rotateRight)
+            //self.cameraNode?.run(playerNode!.moveRight)
         case kVK_UpArrow:
             playerNode?.run(playerNode!.moveUp)
-            self.cameraNode?.run(playerNode!.moveUp)
+            //self.cameraNode?.run(playerNode!.moveUp)
         case kVK_DownArrow:
             playerNode?.run(playerNode!.moveDown)
-            self.cameraNode?.run(playerNode!.moveDown)
+            //self.cameraNode?.run(playerNode!.moveDown)
         default:
             break;
         }
     }
-    
+    override func update(_ currentTime: TimeInterval) {
+        cameraNode?.position = playerNode!.position
+    }
     override func didMove(to view: SKView) {
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
             fatalError("Room layout is missing. Aborting...")
@@ -165,5 +175,6 @@ class TestchamberScene: SKScene {
         self.configureLayoutFromTilemap(roomLayout)
         
         self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
+        
     }
 }
