@@ -11,7 +11,8 @@ import Foundation
 enum TestElement {
     case concreteWall
     case metalWall
-    case button
+    case weightedButton
+    case pedestalButton
     case door
     case testSubject
     case unknown

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Marquis Kurt. All rights reserved.
 //
 
+
 import Foundation
 import SpriteKit
 
@@ -15,7 +16,7 @@ class TestInputElement {
     var elementNode: SKSpriteNode
     private var texture: String
     private var active: Bool = false
-    var antlines: [SKSpriteNode]
+    var antlines: [Antline]?
     
     /**
      Update the texture of the input element based on whether the element is active or not.
@@ -23,18 +24,8 @@ class TestInputElement {
     func updateTexture() {
         if active {
             self.elementNode.texture = SKTexture(imageNamed: texture + "_Active")
-            
-            // TODO: Create an antline texture update call
-            for antline in self.antlines {
-                antline.texture = SKTexture(imageNamed: texture + "_Active")
-            }
         } else {
             self.elementNode.texture = SKTexture(imageNamed: texture)
-            
-            // TODO: Create an antline texture update call
-            for antline in self.antlines {
-                antline.texture = SKTexture(imageNamed: texture)
-            }
         }
     }
     
@@ -53,6 +44,12 @@ class TestInputElement {
     func activate() {
         self.active = true
         self.updateTexture()
+        
+        if self.antlines != nil {
+            for antline in self.antlines! {
+                antline.updateTexture()
+            }
+        }
     } 
     
     /**
@@ -61,6 +58,12 @@ class TestInputElement {
     func deactivate() {
         self.active = false
         self.updateTexture()
+        
+        if self.antlines != nil {
+            for antline in self.antlines! {
+                antline.updateTexture()
+            }
+        }
     }
     
     /**
@@ -71,7 +74,7 @@ class TestInputElement {
         - textureName: The name of the texture to use for the sprite node
         - antlines: The list containing all of the antline tiles associated with the input
      */
-    init(connectsTo: TestInputType, node: SKSpriteNode, textureName: String, antlines: [SKSpriteNode]) {
+    init(connectsTo: TestInputType, node: SKSpriteNode, textureName: String, antlines: [Antline]?) {
         self.outputType = connectsTo
         self.elementNode = node
         self.texture = textureName

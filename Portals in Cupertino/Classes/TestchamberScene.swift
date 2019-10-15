@@ -10,6 +10,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 import Carbon.HIToolbox
+
 class TestchamberScene: SKScene {
     
     // MARK: Attributes
@@ -17,7 +18,7 @@ class TestchamberScene: SKScene {
     var exitDoor: SKSpriteNode?
     var walls: [SKSpriteNode]?
     var playerNode: Player?
-    var inputs: [SKSpriteNode]?
+    var inputs: [TestInputElement]?
     var cameraNode: SKCameraNode?
     
     // MARK: Tile Map Configurations
@@ -47,6 +48,7 @@ class TestchamberScene: SKScene {
                     // Get the texture of the tile
                     let tileTextures = tileDefinition.textures
                     let firstTexture = tileTextures[0]
+                    let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
                     
                     // Calculate the tile's position
                     let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
@@ -81,12 +83,7 @@ class TestchamberScene: SKScene {
                     newTileNode.physicsBody?.friction = 0.7
                     
                     // Check the tile node's definition and create the respective objects.
-                    switch (TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)) {
-                    
-                    // Doors: Attach as the exit door
-                    case .door:
-                        self.exitDoor = newTileNode
-                        break
+                    switch (elementType) {
                         
                     // Players: Assign the player node
                     //          And physics specific to player
@@ -99,11 +96,6 @@ class TestchamberScene: SKScene {
                         self.playerNode?.physicsBody?.linearDamping = 0.1
                         self.playerNode?.physicsBody?.angularDamping = 0.1
                         self.playerNode?.physicsBody?.mass = 50
-                        break
-                        
-                    // Buttons: Assign the button to the list of inputs
-                    case .button:
-                        self.inputs?.append(newTileNode)
                         break
                         
                     // Unknown: Disregard.
@@ -130,6 +122,52 @@ class TestchamberScene: SKScene {
         
         // Remove the tilemap
         map.removeFromParent()
+        
+    }
+    
+    func configureInputSchematic(_ map: SKTileMapNode) {
+        
+        // Set some constants
+        let tileMapSize = map.tileSize
+        let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * tileMapSize.width
+        let halfHeight = CGFloat(map.numberOfRows) / 2.0 * tileMapSize.height
+        let tileMapPosition = map.position
+        
+        // Grab the antline tilemap, if it exists.
+        guard let antlineTilemap = childNode(withName: map.name! + "_antlines") as! SKTileMapNode? else {
+            fatalError("Antline connections to this map are missing. Aborting...")
+        }
+        
+        // Iterate over every item in the parent tilemap.
+        for y in 0 ..< map.numberOfColumns {
+            for x in 0 ..< map.numberOfRows {
+                
+                if let tileDefinition = map.tileDefinition(atColumn: x, row: y) {
+                    
+                    // Get the type of element
+                    let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
+                    
+                    // Gather the textures
+                    let tileTextures = tileDefinition.textures
+                    let firstTexture = tileTextures[0]
+                    
+                    // Calculate the tile's position
+                    let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+                    let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+                    
+                    // Create the new node.
+                    let newTileNode = SKSpriteNode(texture: firstTexture)
+                    
+                    // Set some basic properties.
+                    newTileNode.isHidden = false
+                    newTileNode.position = CGPoint(x: nodeX, y: nodeY)
+                    newTileNode.zPosition = 0
+                    newTileNode.lightingBitMask = 0b0001
+                    
+                }
+                
+            }
+        }
         
     }
     
