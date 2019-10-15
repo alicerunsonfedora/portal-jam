@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  AntlineType.swift
 //  Portals in Cupertino
 //
 //  Created by Marquis Kurt on 10/14/19.
@@ -8,11 +8,8 @@
 
 import Foundation
 
-enum TestElement {
-    case concreteWall
-    case metalWall
-    case button
-    case door
-    case testSubject
-    case unknown
+enum AntlineType {
+    case line
+    case corner
+    case cross
 }
