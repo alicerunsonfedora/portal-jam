@@ -193,7 +193,7 @@ class TestchamberScene: SKScene {
         for y in 0 ..< map.numberOfColumns {
             for x in 0 ..< map.numberOfRows {
                 
-                if let tileDefinition = map.tileDefinition(atColumn: x, row: y) {
+                if let tileDefinition = map.tileDefinition(atColumn: y, row: x) {
                     
                     // Get the type of element
                     let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
@@ -296,33 +296,46 @@ class TestchamberScene: SKScene {
     
     override func keyDown(with event: NSEvent) {
         switch Int(event.keyCode){
-        case kVK_LeftArrow:
+        case kVK_ANSI_A:
             //playerNode?.run(playerNode!.rotateLeft)
             //self.cameraNode?.run(playerNode!.moveLeft)
             print("aa")
             break;
-        case kVK_RightArrow:
+        case kVK_ANSI_D:
             //playerNode?.run(playerNode!.rotateRight)
             //self.cameraNode?.run(playerNode!.moveRight)
             print("aa")
             break;
-        case kVK_UpArrow:
+        case kVK_ANSI_W:
             //playerNode?.run(playerNode!.moveUp)
             //self.cameraNode?.run(playerNode!.moveUp)
             playerNode?.position = CGPoint(x:(playerNode?.position.x)! - sin(playerNode!.zRotation) * 10,
                                            y:(playerNode?.position.y)! + cos(playerNode!.zRotation) * 10)
-        case kVK_DownArrow:
+        case kVK_ANSI_S:
             //playerNode?.run(playerNode!.moveDown)
             //self.cameraNode?.run(playerNode!.moveDown)
-            print("aaa")
+            playerNode?.position = CGPoint(x:(playerNode?.position.x)! + sin(playerNode!.zRotation) * 10,
+                                           y:(playerNode?.position.y)! - cos(playerNode!.zRotation) * 10)
+//            print("aaa")
             break;
         default:
             break;
         }
     }
+    
     override func update(_ currentTime: TimeInterval) {
         cameraNode?.position = playerNode!.position
+        
+        if self.inputs != nil {
+            for input in self.inputs! {
+                if input is TestWeightedButtonElement {
+                    let button = input as! TestWeightedButtonElement
+                    button.checkStatus()
+                }
+            }
+        }
     }
+    
     override func didMove(to view: SKView) {
         
         let trackingArea = NSTrackingArea(rect: view.frame, options: [.activeInKeyWindow, .mouseMoved], owner: self, userInfo: nil)

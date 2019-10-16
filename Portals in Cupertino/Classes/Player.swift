@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Player: SKSpriteNode {
+class Player: TestWeightedElement {
     
     //let moveRight = SKAction.moveBy(x: 5, y: 0, duration: 0.5)
     //let moveLeft = SKAction.moveBy(x: -5, y: 0, duration: 0.5)
@@ -18,8 +18,8 @@ class Player: SKSpriteNode {
     let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
     let rotateRight = SKAction.rotate(byAngle: -(.pi/4), duration: 0)
     
-    override init(texture: SKTexture?, color: NSColor, size: CGSize) {
-        super.init(texture:texture, color:color, size:size)
+     init(texture: SKTexture?) {
+        super.init(texture:texture, weighted: true)
         self.physicsBody = SKPhysicsBody(texture:texture!, size:( texture?.size())!)
         self.physicsBody?.restitution = 0
         self.physicsBody?.isDynamic = true

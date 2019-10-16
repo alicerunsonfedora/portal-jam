@@ -26,6 +26,7 @@
 		BF7994A623566BD7006F95C3 /* TestDoorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7994A523566BD7006F95C3 /* TestDoorElement.swift */; };
 		BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */; };
 		BFBDCF5423538DBD005A5E20 /* PortalElements.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFBDCF5323538DBD005A5E20 /* PortalElements.sks */; };
+		BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC272E52357794600139E30 /* TestWeightedElement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		BF7994A523566BD7006F95C3 /* TestDoorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDoorElement.swift; sourceTree = "<group>"; };
 		BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestchamberScene.swift; sourceTree = "<group>"; };
 		BFBDCF5323538DBD005A5E20 /* PortalElements.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PortalElements.sks; sourceTree = "<group>"; };
+		BFC272E52357794600139E30 /* TestWeightedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedElement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			children = (
 				BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */,
 				BF79949C2356628F006F95C3 /* TestOutputElement.swift */,
+				BFC272E52357794600139E30 /* TestWeightedElement.swift */,
 			);
 			path = "Base Elements";
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */,
 				BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */,
 				BF79949D2356628F006F95C3 /* TestOutputElement.swift in Sources */,
+				BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */,
 				BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */,
 				BF7994A4235667F6006F95C3 /* TestAntlineElement.swift in Sources */,
 				BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */,
