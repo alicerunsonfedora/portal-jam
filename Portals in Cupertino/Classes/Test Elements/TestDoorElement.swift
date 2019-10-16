@@ -17,7 +17,9 @@ class TestDoorElement: TestOutputElement {
      This is achieved by dropping the physics body on the door node.
      */
     func openDoor() {
-        self.elementNode.physicsBody = nil
+        if self.elementNode.physicsBody != nil {
+            self.elementNode.physicsBody = nil
+        }
     }
     
     /**
@@ -38,6 +40,17 @@ class TestDoorElement: TestOutputElement {
     }
     
     /**
+     Check the door's status and open/close appropriately.
+     */
+    func toggleDoor() {
+        if self.isActive() {
+            openDoor()
+        } else {
+            closeDoor()
+        }
+    }
+    
+    /**
      Initialize a door.
      - Parameters:
         - inputs: The inputs the door is connected to.
@@ -54,12 +67,8 @@ class TestDoorElement: TestOutputElement {
         }
         
         super.init(inputs: inputs, node: node, textureName: textureName)
+        self.toggleDoor()
         
-        if self.isActive() {
-            openDoor()
-        } else {
-            closeDoor()
-        }
     }
     
 }

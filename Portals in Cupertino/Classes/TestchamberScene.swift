@@ -326,6 +326,8 @@ class TestchamberScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         cameraNode?.position = playerNode!.position
         
+        self.exitDoor?.toggleDoor()
+        
         if self.inputs != nil {
             for input in self.inputs! {
                 if input is TestWeightedButtonElement {
