@@ -89,11 +89,6 @@ class TestchamberScene: SKScene {
                     
                     // Check the tile node's definition and create the respective objects.
                     switch (elementType) {
-                    
-                    // Doors: Attach as the exit door
-                    case .door:
-                        self.exitDoor = newTileNode
-                        break
                         
                     // Players: Assign the player node
                     //          And physics specific to player
