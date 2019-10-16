@@ -20,6 +20,7 @@ class Player: TestWeightedElement {
     
      init(texture: SKTexture?) {
         super.init(texture:texture, weighted: true)
+        self.zPosition = 3
         self.physicsBody = SKPhysicsBody(texture:texture!, size:( texture?.size())!)
         self.physicsBody?.restitution = 0
         self.physicsBody?.isDynamic = true
