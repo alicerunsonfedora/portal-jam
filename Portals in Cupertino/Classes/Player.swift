@@ -17,4 +17,20 @@ class Player: SKSpriteNode {
     let moveDown = SKAction.moveBy(x: 0, y: -5, duration: 0)
     let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
     let rotateRight = SKAction.rotate(byAngle: -(.pi/4), duration: 0)
+    
+    override init(texture: SKTexture?, color: NSColor, size: CGSize) {
+        super.init(texture:texture, color:color, size:size)
+        self.physicsBody = SKPhysicsBody(texture:texture!, size:( texture?.size())!)
+        self.physicsBody?.restitution = 0
+        self.physicsBody?.isDynamic = true
+        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.friction = 0.2
+        self.physicsBody?.linearDamping = 0.1
+        self.physicsBody?.angularDamping = 0.1
+        self.physicsBody?.mass = 50
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

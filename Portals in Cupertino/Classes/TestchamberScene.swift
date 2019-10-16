@@ -47,6 +47,7 @@ class TestchamberScene: SKScene {
                     // Get the texture of the tile
                     let tileTextures = tileDefinition.textures
                     let firstTexture = tileTextures[0]
+                    let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
                     
                     // Calculate the tile's position
                     let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
@@ -56,7 +57,8 @@ class TestchamberScene: SKScene {
                     // use the Player class instead.
                     var newTileNode = SKSpriteNode(texture: firstTexture)
                     
-                    if (TestchamberStructure.getElementType(byDefinition: tileDefinition.name!) == .testSubject) {
+                    
+                    if elementType == .testSubject {
                         newTileNode = Player(texture: firstTexture)
                     }
 
@@ -70,18 +72,21 @@ class TestchamberScene: SKScene {
                     newTileNode.lightingBitMask = 0b0001
                     
                     // Assign a physics body to the node and change its properties.
-                    newTileNode.physicsBody = SKPhysicsBody(texture: firstTexture,
-                                                            size: CGSize(width: (firstTexture.size().width),
-                                                                         height: (firstTexture.size().height)))
-                    newTileNode.physicsBody?.restitution = 0 // Not bouncy
-                    newTileNode.physicsBody?.isDynamic = false // Immovable
-                    newTileNode.physicsBody?.affectedByGravity = false
-                    newTileNode.physicsBody?.linearDamping = 1000.0 // Dampens velocity between other nodes (eg. stops the player)
-                    newTileNode.physicsBody?.allowsRotation = false // Doesn't rotate
-                    newTileNode.physicsBody?.friction = 0.7
+                    if (elementType != .testSubject) {
+                        newTileNode.physicsBody = SKPhysicsBody(texture: firstTexture,
+                                          size: CGSize(width: (firstTexture.size().width),
+                                          height: (firstTexture.size().height)))
+                        newTileNode.physicsBody?.restitution = 0 // Not bouncy
+                        newTileNode.physicsBody?.isDynamic = false // Immovable
+                        newTileNode.physicsBody?.affectedByGravity = false
+                        newTileNode.physicsBody?.linearDamping = 1000.0 // Dampens velocity between other nodes (eg. stops the player)
+                        newTileNode.physicsBody?.allowsRotation = false // Doesn't rotate
+                        newTileNode.physicsBody?.friction = 0.7
+                    }
+                    
                     
                     // Check the tile node's definition and create the respective objects.
-                    switch (TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)) {
+                    switch (elementType) {
                     
                     // Doors: Attach as the exit door
                     case .door:
@@ -91,14 +96,9 @@ class TestchamberScene: SKScene {
                     // Players: Assign the player node
                     //          And physics specific to player
                     case .testSubject:
-                        self.playerNode = newTileNode as? Player
-                        self.playerNode?.physicsBody?.restitution = 0
-                        self.playerNode?.physicsBody?.isDynamic = true
-                        self.playerNode?.physicsBody?.affectedByGravity = false
-                        self.playerNode?.physicsBody?.friction = 0.2
-                        self.playerNode?.physicsBody?.linearDamping = 0.1
-                        self.playerNode?.physicsBody?.angularDamping = 0.1
-                        self.playerNode?.physicsBody?.mass = 50
+                        if newTileNode is Player {
+                            self.playerNode = newTileNode as? Player
+                        }
                         break
                         
                     // Buttons: Assign the button to the list of inputs
@@ -147,20 +147,39 @@ class TestchamberScene: SKScene {
         //print(touchedNode == playerNode)
     }*/
     
+    override func mouseMoved(with event: NSEvent) {
+        //print("IM moving!!!")
+        let location = event.location(in: self)
+        let playerX = playerNode?.position.x
+        let playerY = playerNode?.position.y
+        let targetX = location.x
+        let targetY = location.y
+        //let angle = ((targetY - playerY!) / (targetX - playerX!))
+        let rotation = atan2((targetY - playerY!), (targetX - playerX!) )
+        playerNode?.zRotation = rotation
+    }
+    
     override func keyDown(with event: NSEvent) {
         switch Int(event.keyCode){
         case kVK_LeftArrow:
-            playerNode?.run(playerNode!.rotateLeft)
+            //playerNode?.run(playerNode!.rotateLeft)
             //self.cameraNode?.run(playerNode!.moveLeft)
+            print("aa")
+            break;
         case kVK_RightArrow:
-            playerNode?.run(playerNode!.rotateRight)
+            //playerNode?.run(playerNode!.rotateRight)
             //self.cameraNode?.run(playerNode!.moveRight)
+            print("aa")
+            break;
         case kVK_UpArrow:
-            playerNode?.run(playerNode!.moveUp)
+            //playerNode?.run(playerNode!.moveUp)
             //self.cameraNode?.run(playerNode!.moveUp)
+            playerNode?.position = CGPoint(x:(playerNode?.position.x)! + cos(playerNode!.zRotation) * 10,y:(playerNode?.position.y)! + sin(playerNode!.zRotation) * 10)
         case kVK_DownArrow:
-            playerNode?.run(playerNode!.moveDown)
+            //playerNode?.run(playerNode!.moveDown)
             //self.cameraNode?.run(playerNode!.moveDown)
+            print("aaa")
+            break;
         default:
             break;
         }
@@ -169,12 +188,15 @@ class TestchamberScene: SKScene {
         cameraNode?.position = playerNode!.position
     }
     override func didMove(to view: SKView) {
+        
+        let trackingArea = NSTrackingArea(rect: view.frame, options: [.activeInKeyWindow, .mouseMoved], owner: self, userInfo: nil)
+        view.addTrackingArea(trackingArea)
+        
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
             fatalError("Room layout is missing. Aborting...")
         }
         self.configureLayoutFromTilemap(roomLayout)
         
         self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
-        
     }
 }
