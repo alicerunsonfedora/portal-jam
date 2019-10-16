@@ -174,7 +174,8 @@ class TestchamberScene: SKScene {
         case kVK_UpArrow:
             //playerNode?.run(playerNode!.moveUp)
             //self.cameraNode?.run(playerNode!.moveUp)
-            playerNode?.position = CGPoint(x:(playerNode?.position.x)! + cos(playerNode!.zRotation) * 10,y:(playerNode?.position.y)! + sin(playerNode!.zRotation) * 10)
+            playerNode?.position = CGPoint(x:(playerNode?.position.x)! - sin(playerNode!.zRotation) * 10,
+                                           y:(playerNode?.position.y)! + cos(playerNode!.zRotation) * 10)
         case kVK_DownArrow:
             //playerNode?.run(playerNode!.moveDown)
             //self.cameraNode?.run(playerNode!.moveDown)
