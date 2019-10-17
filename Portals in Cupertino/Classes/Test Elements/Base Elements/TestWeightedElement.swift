@@ -28,7 +28,7 @@ class TestWeightedElement: SKSpriteNode {
         - weighted: Whether this item has weight or not. Defaults to `true`.
      */
     init(texture: SKTexture?, weighted: Bool) {
-        self.weighted = false
+        self.weighted = weighted
         super.init(texture: texture, color: NSColor.clear, size: (texture?.size())!)
     }
     

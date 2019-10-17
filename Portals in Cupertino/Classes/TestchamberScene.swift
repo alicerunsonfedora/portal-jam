@@ -175,7 +175,7 @@ class TestchamberScene: SKScene {
                     // Set some basic properties.
                     antlineNode.isHidden = false
                     antlineNode.position = CGPoint(x: antlineX, y: antlineY)
-                    antlineNode.zPosition = 0
+                    antlineNode.zPosition = -1
                     antlineNode.lightingBitMask = 0b0001
                     
                     // Create a new Antline object and add it to the antline list.

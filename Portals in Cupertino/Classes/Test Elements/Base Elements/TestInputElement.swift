@@ -25,7 +25,7 @@ class TestInputElement {
      Update the texture of the input element based on whether the element is active or not.
      */
     func updateTexture() {
-        if active {
+        if self.active {
             self.elementNode.texture = SKTexture(imageNamed: texture + "_Active")
         } else {
             self.elementNode.texture = SKTexture(imageNamed: texture)

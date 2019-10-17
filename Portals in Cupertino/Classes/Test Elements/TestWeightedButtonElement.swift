@@ -23,12 +23,12 @@ class TestWeightedButtonElement: TestInputElement {
         let weightedNodes = self.elementNode.parent?.children.filter({ $0 is TestWeightedElement }).map({ node in node as! TestWeightedElement })
         
         if weightedNodes != nil {
-            for node in weightedNodes! {
-                if self.elementNode.frame.contains(node.position) {
-                    self.activate()
-                } else {
-                    self.deactivate()
-                }
+            let anyWeightedNodesInContact = weightedNodes!.filter({ node in node.weighted && self.elementNode.frame.contains(node.position) })
+            
+            if anyWeightedNodesInContact.count > 0 {
+                self.activate()
+            } else {
+                self.deactivate()
             }
         }
     }

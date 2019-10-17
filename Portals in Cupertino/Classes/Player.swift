@@ -30,7 +30,7 @@ class Player: TestWeightedElement {
      */
     init(texture: SKTexture?) {
         super.init(texture:texture, weighted: true)
-        self.zPosition = 3
+        
         self.physicsBody = SKPhysicsBody(texture:texture!, size:( texture?.size())!)
         self.physicsBody?.restitution = 0
         self.physicsBody?.isDynamic = true
@@ -39,6 +39,8 @@ class Player: TestWeightedElement {
         self.physicsBody?.linearDamping = 0.1
         self.physicsBody?.angularDamping = 0.1
         self.physicsBody?.mass = 50
+        
+        self.zPosition = 5
     }
     
     required init?(coder aDecoder: NSCoder) {
