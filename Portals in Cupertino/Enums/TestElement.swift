@@ -8,12 +8,47 @@
 
 import Foundation
 
+/**
+ A specific type of test element. Useful for generating individual nodes.
+ */
 enum TestElement {
+    /**
+     A portalable, concrete wall.
+     */
     case concreteWall
+    
+    /**
+     A non-portable, metal wall.
+     */
     case metalWall
+    
+    /**
+     A weighted button.
+     */
     case weightedButton
+    
+    /**
+     A pedestal button
+     */
     case pedestalButton
+    
+    /**
+     A door, either an exit or standard.
+     */
     case door
+    
+    /**
+     A weighted storage cube.
+     */
+    case cube
+    
+    /**
+     A test subject (usually the player).
+     */
     case testSubject
+    
+    /**
+     An unknown element. Use this as the "catch-all".
+     */
     case unknown
 }

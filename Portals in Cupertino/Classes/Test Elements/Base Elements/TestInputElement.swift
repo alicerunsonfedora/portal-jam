@@ -10,6 +10,9 @@
 import Foundation
 import SpriteKit
 
+/**
+ A base class to control inputs. Classes that inherit this one will act as an input source and can control outputs.
+ */
 class TestInputElement {
     
     private var outputType: TestInputType

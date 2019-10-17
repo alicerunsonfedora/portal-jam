@@ -9,6 +9,11 @@
 import Foundation
 import SpriteKit
 
+/**
+ An Aperture Science Heavy-Duty Super-Colliding Super Button (Weighted Button).
+ 
+ Weighted Buttons will look for any `TestWeightedElements` to trigger its activation based on the element's location relative to it.
+ */
 class TestWeightedButtonElement: TestInputElement {
     
     /**

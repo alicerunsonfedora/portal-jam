@@ -9,6 +9,9 @@
 import Foundation
 import SpriteKit
 
+/**
+ A basic door controlled by an input.
+ */
 class TestDoorElement: TestOutputElement {
     
     /**

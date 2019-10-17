@@ -11,6 +11,11 @@ import SpriteKit
 import GameplayKit
 import Carbon.HIToolbox
 
+/**
+ A basic testchamber scene with tilemaps for a test layout.
+ 
+ Each testchamber should include and exit door, walls, a player, inputs, outputs, and a camera that follows the player. Testchambers made with SpriteKit use this class to set up the scene and make it solvable/playable.
+ */
 class TestchamberScene: SKScene {
     
     // MARK: Attributes
@@ -207,7 +212,7 @@ class TestchamberScene: SKScene {
                     let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
                     
                     // Create the new node.
-                    let newTileNode = SKSpriteNode(texture: firstTexture)
+                    var newTileNode = SKSpriteNode(texture: firstTexture)
                     
                     // Set some basic properties.
                     newTileNode.isHidden = false
@@ -216,6 +221,9 @@ class TestchamberScene: SKScene {
                     newTileNode.lightingBitMask = 0b0001
                     
                     switch elementType {
+                    case .cube:
+                        newTileNode = TestWeightedStorageCubeElement(atPosition: CGPoint(x: nodeX, y: nodeY))
+                        break
                     case .door:
                         if isExitLayout! {
                             if self.exitDoor == nil {

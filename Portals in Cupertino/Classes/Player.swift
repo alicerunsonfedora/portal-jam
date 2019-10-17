@@ -9,6 +9,11 @@
 import Foundation
 import SpriteKit
 
+/**
+ The primary test subject in a testchamber.
+ 
+ The player is an inherited `TestWeightedElement`, allowing it to interact with buttons and other weight-based items. The player also handles collisions with walls and moves.
+ */
 class Player: TestWeightedElement {
     
     //let moveRight = SKAction.moveBy(x: 5, y: 0, duration: 0.5)
@@ -18,7 +23,12 @@ class Player: TestWeightedElement {
     let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
     let rotateRight = SKAction.rotate(byAngle: -(.pi/4), duration: 0)
     
-     init(texture: SKTexture?) {
+    /**
+     Initialize the player.
+     - Parameters:
+        - texture: The appropriate player texture.
+     */
+    init(texture: SKTexture?) {
         super.init(texture:texture, weighted: true)
         self.zPosition = 3
         self.physicsBody = SKPhysicsBody(texture:texture!, size:( texture?.size())!)

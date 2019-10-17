@@ -9,6 +9,9 @@
 import Foundation
 import SpriteKit
 
+/**
+ Indicator lights that determine whether an input has been activated.
+ */
 class Antline: TestOutputElement {
     
     var type: AntlineType

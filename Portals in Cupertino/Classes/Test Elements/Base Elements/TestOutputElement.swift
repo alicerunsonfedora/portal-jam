@@ -9,6 +9,9 @@
 import Foundation
 import SpriteKit
 
+/**
+ Base class for an output element. Classes that inherit this class can act as an output that is dependent on input sources.
+ */
 class TestOutputElement {
     
     private var inputs: [TestInputElement]

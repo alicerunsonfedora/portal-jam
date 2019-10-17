@@ -25,6 +25,8 @@ struct TestchamberStructure {
             return .metalWall
         case "Concrete_Wall":
             return .concreteWall
+        case "Weighted_Cube":
+            return .cube
         case "Player":
             return .testSubject
         case "Weighted_Button":

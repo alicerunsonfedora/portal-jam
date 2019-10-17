@@ -19,6 +19,7 @@
 		BF1ABC81234E78090095E5DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC7F234E78090095E5DC /* Main.storyboard */; };
 		BF1ABC8B234E78D50095E5DC /* CONTRIBUTING.md in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC89234E78D50095E5DC /* CONTRIBUTING.md */; };
 		BF1ABC8C234E78D50095E5DC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC8A234E78D50095E5DC /* README.md */; };
+		BF286CE52358B2F300542A19 /* TestWeightedStorageCubeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF286CE42358B2F300542A19 /* TestWeightedStorageCubeElement.swift */; };
 		BF5C17D2235398500026C1C2 /* Sample.sks in Resources */ = {isa = PBXBuildFile; fileRef = BF5C17D1235398500026C1C2 /* Sample.sks */; };
 		BF79949923565F1E006F95C3 /* TestWeightedButtonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */; };
 		BF79949D2356628F006F95C3 /* TestOutputElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79949C2356628F006F95C3 /* TestOutputElement.swift */; };
@@ -45,6 +46,7 @@
 		BF1ABC83234E78090095E5DC /* Portals_in_Cupertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Portals_in_Cupertino.entitlements; sourceTree = "<group>"; };
 		BF1ABC89234E78D50095E5DC /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		BF1ABC8A234E78D50095E5DC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BF286CE42358B2F300542A19 /* TestWeightedStorageCubeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedStorageCubeElement.swift; sourceTree = "<group>"; };
 		BF5C17D1235398500026C1C2 /* Sample.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Sample.sks; sourceTree = "<group>"; };
 		BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedButtonElement.swift; sourceTree = "<group>"; };
 		BF79949C2356628F006F95C3 /* TestOutputElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOutputElement.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */,
 				BF7994A3235667F6006F95C3 /* TestAntlineElement.swift */,
 				BF7994A523566BD7006F95C3 /* TestDoorElement.swift */,
+				BF286CE42358B2F300542A19 /* TestWeightedStorageCubeElement.swift */,
 			);
 			path = "Test Elements";
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */,
 				BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */,
 				BF7994A4235667F6006F95C3 /* TestAntlineElement.swift in Sources */,
+				BF286CE52358B2F300542A19 /* TestWeightedStorageCubeElement.swift in Sources */,
 				BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */,
 				BF1968F623556B23004E25B0 /* AntlineType.swift in Sources */,
 				BF79949923565F1E006F95C3 /* TestWeightedButtonElement.swift in Sources */,
