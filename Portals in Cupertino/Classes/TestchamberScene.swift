@@ -303,7 +303,7 @@ class TestchamberScene: SKScene {
     }
     
     override func keyDown(with event: NSEvent) {
-        switch Int(event.keyCode){
+        switch Int(event.keyCode) {
         case kVK_ANSI_A:
             //playerNode?.run(playerNode!.rotateLeft)
             //self.cameraNode?.run(playerNode!.moveLeft)
