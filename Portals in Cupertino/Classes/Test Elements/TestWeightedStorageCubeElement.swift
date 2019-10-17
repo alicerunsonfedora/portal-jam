@@ -34,6 +34,7 @@ class TestWeightedStorageCubeElement : TestWeightedElement {
         self.physicsBody = SKPhysicsBody(texture: weightedCubeTexture, alphaThreshold: 0.9, size: weightedCubeTexture.size())
         self.physicsBody?.restitution = 0
         self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.mass = 40
     }
     
     required init?(coder aDecoder: NSCoder) {
