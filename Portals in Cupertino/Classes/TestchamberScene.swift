@@ -374,6 +374,8 @@ class TestchamberScene: SKScene {
             }
         }
         
+        self.exitDoor?.toggleDoor()
+        
         if self.outputs != nil {
             for output in self.outputs! {
                 switch output {
