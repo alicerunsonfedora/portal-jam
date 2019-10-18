@@ -15,12 +15,6 @@ import SpriteKit
  The player is an inherited `TestWeightedElement`, allowing it to interact with buttons and other weight-based items. The player also handles collisions with walls and moves.
  */
 class Player: TestWeightedElement {
-    
-    let moveUp = SKAction.moveBy(x: 0, y: 5, duration: 0)
-    let moveDown = SKAction.moveBy(x: 0, y: -5, duration: 0)
-    let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
-    let rotateRight = SKAction.rotate(byAngle: -(.pi/4), duration: 0)
-    
     /**
      Initialize the player.
      - Parameters:
@@ -41,9 +35,16 @@ class Player: TestWeightedElement {
         self.zPosition = 5
     }
     
+    /**
+        Move the player in a given direction
+        - Parameters:
+            - direction: x, y direction to move the player to
+     */
+    
     func moveTo(direction: CGPoint){
         self.run(SKAction.move(to: direction, duration: 0.1))
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -279,28 +279,36 @@ class TestchamberScene: SKScene {
     
     
     override func mouseMoved(with event: NSEvent) {
+        //Gets the mouse position and player's
         let location = event.location(in: self)
         let playerX = playerNode?.position.x
         let playerY = playerNode?.position.y
         let targetX = location.x
         let targetY = location.y
-        let rotation = atan2((targetY - playerY!), (targetX - playerX!) )
+        //Gets the angle between the two and makes that the direction move the player to face
+        let rotation = atan2((targetY - playerY!), (targetX - playerX!))
         playerNode?.zRotation = rotation - (.pi / 2)
     }
     
     override func keyDown(with event: NSEvent) {
+        //Gets the code of the key pressed on the keyboard
         switch Int(event.keyCode) {
         case kVK_ANSI_A:
-            break
+            //Strafes player to the left relative to the direction they're facing
+            playerNode?.moveTo(direction: CGPoint(x: (playerNode?.position.x)! - sin(playerNode!.zRotation + (.pi/2)) * 10,
+                                                  y: (playerNode?.position.y)! + cos(playerNode!.zRotation + (.pi/2)) * 10))
         case kVK_ANSI_D:
-            break
+            //Strafes player to the right relative to the direction they're facing
+            playerNode?.moveTo(direction: CGPoint(x:(playerNode?.position.x)! - sin(playerNode!.zRotation - (.pi/2)) * 10,
+                                                  y: ((playerNode?.position.y)! + cos(playerNode!.zRotation - (.pi/2)) * 10)))
         case kVK_ANSI_W:
+            //Moves player forward to the direction they're facing
             playerNode?.moveTo(direction: CGPoint(x:(playerNode?.position.x)! - sin(playerNode!.zRotation) * 10,
-            y:(playerNode?.position.y)! + cos(playerNode!.zRotation) * 10))
+                                                  y:(playerNode?.position.y)! + cos(playerNode!.zRotation) * 10))
         case kVK_ANSI_S:
+            //Moves player
             playerNode?.moveTo(direction: CGPoint(x:(playerNode?.position.x)! + sin(playerNode!.zRotation) * 10,
-            y:(playerNode?.position.y)! - cos(playerNode!.zRotation) * 10))
-            break
+                                                  y:(playerNode?.position.y)! - cos(playerNode!.zRotation) * 10))
         default:
             break
         }
