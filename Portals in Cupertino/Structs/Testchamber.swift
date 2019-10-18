@@ -33,6 +33,8 @@ struct TestchamberStructure {
             return .weightedButton
         case "Pedestal_Button":
             return .pedestalButton
+        case "Cube_Spawn_Trigger":
+            return .cubeSpawner
         case "Metal_Wall_With_Door":
             return .door
         case "Concrete_Wall_with_Door":

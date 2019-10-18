@@ -153,6 +153,7 @@ class TestchamberScene: SKScene {
         var antlines = [Antline]()
         var inputs = [TestInputElement]()
         var outputs = [TestOutputElement]()
+        var cube: TestWeightedStorageCubeElement?
         
         //Iterate over every antline element
         for antlineY in 0 ..< antlineTilemap.numberOfColumns {
@@ -223,6 +224,7 @@ class TestchamberScene: SKScene {
                     switch elementType {
                     case .cube:
                         newTileNode = TestWeightedStorageCubeElement(atPosition: CGPoint(x: nodeX, y: nodeY))
+                        cube = newTileNode as? TestWeightedStorageCubeElement
                         break
                     case .door:
                         if isExitLayout! {
@@ -231,6 +233,7 @@ class TestchamberScene: SKScene {
                             }
                         } else {
                             outputs.append(TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal")))
+                            print(outputs)
                         }
                         break
                     case .weightedButton:
@@ -252,6 +255,29 @@ class TestchamberScene: SKScene {
                             output.addInput(button!)
                         }
                         break
+                    case .pedestalButton:
+                        var button: TestPedestalButton?
+                        
+                        if isExitLayout! {
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toExit, node: newTileNode, antlines: antlines)
+                            self.exitDoor?.addInput(button!)
+                        } else {
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toElement, node: newTileNode, antlines: antlines)
+                        }
+                        
+                        for antline in antlines {
+                            antline.addInput(button!)
+                        }
+                        
+                        for output in outputs {
+                            output.addInput(button!)
+                        }
+                        
+                        inputs.append(button!)
+                        
+                    case .cubeSpawner:
+                        let spawner = TestCubeSpawnerElement(inputs: inputs, node: newTileNode, existingCube: cube)
+                        outputs.append(spawner)
                     default:
                         break
                     }
@@ -309,11 +335,28 @@ class TestchamberScene: SKScene {
             //Moves player
             playerNode?.moveTo(direction: CGPoint(x:(playerNode?.position.x)! + sin(playerNode!.zRotation) * 10,
                                                   y:(playerNode?.position.y)! - cos(playerNode!.zRotation) * 10))
+            break
+        
         case kVK_ANSI_E:
-            if (playerNode?.isCarrying ?? false){
+            if (playerNode?.isCarrying ?? false) {
                 playerNode?.drop()
             }
-            else {playerNode?.pickUP()}
+            else {
+                playerNode?.pickUP()
+            }
+            
+            if self.inputs != nil {
+                for input in self.inputs! {
+                    if input is TestPedestalButton {
+                        let pedestalButton = input as! TestPedestalButton
+                        if (self.playerNode?.isCloseTo(node: pedestalButton.elementNode))!
+                            && (self.playerNode?.isFacing(node: pedestalButton.elementNode))! {
+                            pedestalButton.use()
+                        }
+                    }
+                }
+            }
+            break
         default:
             break
         }
@@ -321,14 +364,29 @@ class TestchamberScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         cameraNode?.position = playerNode!.position
-        
-        self.exitDoor?.toggleDoor()
-        
+                
         if self.inputs != nil {
             for input in self.inputs! {
                 if input is TestWeightedButtonElement {
                     let button = input as! TestWeightedButtonElement
                     button.checkStatus()
+                }
+            }
+        }
+        
+        self.exitDoor?.toggleDoor()
+        
+        if self.outputs != nil {
+            for output in self.outputs! {
+                switch output {
+                case (is TestDoorElement):
+                    (output as! TestDoorElement).toggleDoor()
+                    break
+                case (is TestCubeSpawnerElement):
+                    (output as! TestCubeSpawnerElement).spawnCubeWithUpdate()
+                    break
+                default:
+                    break
                 }
             }
         }
