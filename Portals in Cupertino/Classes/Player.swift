@@ -15,12 +15,16 @@ import SpriteKit
  The player is an inherited `TestWeightedElement`, allowing it to interact with buttons and other weight-based items. The player also handles collisions with walls and moves.
  */
 class Player: TestWeightedElement {
+    
+    var isCarrying: Bool = false
+    
     /**
      Initialize the player.
      - Parameters:
         - texture: The appropriate player texture.
      */
     init(texture: SKTexture?) {
+        
         super.init(texture:texture, weighted: true)
         
         self.physicsBody = SKPhysicsBody(texture:texture!, size:( texture?.size())!)
@@ -45,6 +49,30 @@ class Player: TestWeightedElement {
         self.run(SKAction.move(to: direction, duration: 0.1))
     }
     
+    func pickUP(){
+        //Checks the relative TestWeightedStorageCubeElements and "picks" one up
+        let weightedNodes = self.parent?.children.filter({ $0 is TestWeightedStorageCubeElement }).map({ node in node as! TestWeightedStorageCubeElement })
+        
+        if weightedNodes != nil{
+            let anyWeightedNodesInContact = weightedNodes!.filter({ node in node.weighted && self.frame.contains(node.position) })
+            if anyWeightedNodesInContact.count > 0 {
+                anyWeightedNodesInContact[0].move(toParent: self)
+                anyWeightedNodesInContact[0].zRotation = self.zRotation
+                self.isCarrying = true
+            }
+    
+            }
+    }
+    
+    func drop(){
+        //Checks if contains any TestWeightedStorageCubElement and "drops" it
+        let weightedNodes = self.children.filter({ $0 is TestWeightedStorageCubeElement }).map({ node in node as! TestWeightedStorageCubeElement })
+        
+        if weightedNodes.count > 0{
+            weightedNodes[0].move(toParent: self.parent!)
+            self.isCarrying = false
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

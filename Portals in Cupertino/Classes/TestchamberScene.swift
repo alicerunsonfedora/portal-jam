@@ -309,6 +309,11 @@ class TestchamberScene: SKScene {
             //Moves player
             playerNode?.moveTo(direction: CGPoint(x:(playerNode?.position.x)! + sin(playerNode!.zRotation) * 10,
                                                   y:(playerNode?.position.y)! - cos(playerNode!.zRotation) * 10))
+        case kVK_ANSI_E:
+            if (playerNode?.isCarrying ?? false){
+                playerNode?.drop()
+            }
+            else {playerNode?.pickUP()}
         default:
             break
         }
