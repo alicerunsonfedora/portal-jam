@@ -341,7 +341,9 @@ class TestchamberScene: SKScene {
             if (playerNode?.isCarrying ?? false) {
                 playerNode?.drop()
             }
-            else { playerNode?.pickUP() }
+            else {
+                playerNode?.pickUP()
+            }
             
             if self.inputs != nil {
                 for input in self.inputs! {
