@@ -8,36 +8,47 @@
 
 import Foundation
 
+/**
+ A specific type of test element. Useful for generating individual nodes.
+ */
 enum TestElement {
+    /**
+     A portalable, concrete wall.
+     */
     case concreteWall
+    
+    /**
+     A non-portable, metal wall.
+     */
     case metalWall
-    case button
+    
+    /**
+     A weighted button.
+     */
+    case weightedButton
+    
+    /**
+     A pedestal button
+     */
+    case pedestalButton
+    
+    /**
+     A door, either an exit or standard.
+     */
     case door
+    
+    /**
+     A weighted storage cube.
+     */
+    case cube
+    
+    /**
+     A test subject (usually the player).
+     */
     case testSubject
+    
+    /**
+     An unknown element. Use this as the "catch-all".
+     */
     case unknown
-}
-
-struct TestchamberStructure {
-    
-    static func getElementType(byDefinition: String) -> TestElement {
-        switch byDefinition {
-        case "Metal_Wall":
-            return .metalWall
-        case "Concrete_Wall":
-            return .concreteWall
-        case "Player":
-            return .testSubject
-        case "Concrete_Button":
-            return .button
-        case "Metal_Button":
-            return .button
-        case "Metal_Wall_With_Door":
-            return .door
-        case "Concrete_Wall_with_Door":
-            return .door
-        default:
-            return .unknown
-        }
-    }
-    
 }
