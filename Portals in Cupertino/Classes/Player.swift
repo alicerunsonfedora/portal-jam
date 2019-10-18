@@ -16,8 +16,6 @@ import SpriteKit
  */
 class Player: TestWeightedElement {
     
-    //let moveRight = SKAction.moveBy(x: 5, y: 0, duration: 0.5)
-    //let moveLeft = SKAction.moveBy(x: -5, y: 0, duration: 0.5)
     let moveUp = SKAction.moveBy(x: 0, y: 5, duration: 0)
     let moveDown = SKAction.moveBy(x: 0, y: -5, duration: 0)
     let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
@@ -41,6 +39,10 @@ class Player: TestWeightedElement {
         self.physicsBody?.mass = 50
         
         self.zPosition = 5
+    }
+    
+    func moveTo(direction: CGPoint){
+        self.run(SKAction.move(to: direction, duration: 0.1))
     }
     
     required init?(coder aDecoder: NSCoder) {
