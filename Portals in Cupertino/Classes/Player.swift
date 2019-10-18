@@ -23,6 +23,22 @@ class Player: TestWeightedElement {
     let rotateLeft = SKAction.rotate(byAngle:(.pi/4), duration: 0)
     let rotateRight = SKAction.rotate(byAngle: -(.pi/4), duration: 0)
     
+    func isCloseTo(node: SKNode) -> Bool {
+        let dx = pow((node.position.x - self.position.x), 2)
+        let dy = pow((node.position.y - self.position.y), 2)
+        let distance = sqrt(dx + dy)
+        
+        return distance <= 50
+    }
+    
+    func isFacing(node: SKNode) -> Bool {
+        let dx = node.position.x - self.position.x
+        let dy = node.position.y - self.position.y
+        let theta = atan2f(Float(dy), Float(dx))
+        
+        return abs(CGFloat(theta) - self.zRotation) < 10
+    }
+    
     /**
      Initialize the player.
      - Parameters:

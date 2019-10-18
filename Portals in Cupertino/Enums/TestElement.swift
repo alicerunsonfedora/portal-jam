@@ -32,6 +32,8 @@ enum TestElement {
      */
     case pedestalButton
     
+    case cubeSpawner
+    
     /**
      A door, either an exit or standard.
      */

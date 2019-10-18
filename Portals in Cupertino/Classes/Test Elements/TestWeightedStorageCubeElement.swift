@@ -16,6 +16,13 @@ import SpriteKit
  */
 class TestWeightedStorageCubeElement : TestWeightedElement {
     
+    func destroy() {
+        self.run(SKAction.colorize(with: NSColor.black, colorBlendFactor: 0.8, duration: 3.0))
+        self.run(SKAction(named: "Vaporize", duration: 3.0)!) {
+            self.removeFromParent()
+        }
+    }
+    
     /**
      Initialize a Weighted Storage Cube that can interact with Weighted Buttons.
      - Parameters:
