@@ -433,6 +433,8 @@ class TestchamberScene: SKScene {
         
         let trackingArea = NSTrackingArea(rect: view.frame, options: [.activeInKeyWindow, .mouseMoved, .inVisibleRect], owner: self, userInfo: nil)
         view.addTrackingArea(trackingArea)
+        
+        self.backgroundColor = #colorLiteral(red: 0.146314883, green: 0.2027438601, blue: 0.236890763, alpha: 1)
                 
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
             fatalError("Room layout is missing. Aborting...")
