@@ -32,6 +32,9 @@ enum TestElement {
      */
     case pedestalButton
     
+    /**
+     A cube spawner
+     */
     case cubeSpawner
     
     /**
@@ -48,6 +51,11 @@ enum TestElement {
      A test subject (usually the player).
      */
     case testSubject
+    
+    /**
+     Deadly goo.
+     */
+    case goo
     
     /**
      An unknown element. Use this as the "catch-all".

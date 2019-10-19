@@ -16,8 +16,22 @@ import SpriteKit
  */
 class Player: TestWeightedElement {
     
+    /**
+     Whether the player is currently carrying an item. Defaults to `false`.
+     */
     var isCarrying: Bool = false
     
+    /**
+     The player's current health. Defaults to `100`.
+     */
+    var health: Int = 100
+    
+    /**
+     Determine if the player is close to an item.
+     - Parameters:
+        - node: The node to check for closeness
+     - Returns: Boolean dictating whether the player is near an item
+     */
     func isCloseTo(node: SKNode) -> Bool {
         let dx = pow((node.position.x - self.position.x), 2)
         let dy = pow((node.position.y - self.position.y), 2)
@@ -26,12 +40,27 @@ class Player: TestWeightedElement {
         return distance <= 50
     }
     
+    /**
+     Determine if the player is facing an item.
+     - Parameters:
+        - node: The node to check for proximity
+     - Returns: Boolean dictating whether the player is facing an item
+     */
     func isFacing(node: SKNode) -> Bool {
         let dx = node.position.x - self.position.x
         let dy = node.position.y - self.position.y
         let theta = atan2f(Float(dy), Float(dx))
         
         return abs(CGFloat(theta) - self.zRotation) < 10
+    }
+    
+    /**
+     Check the current health status and apply any necessary actions
+     */
+    func checkHealthStatus() {
+        if self.health == 0 {
+            print("Oof, ouch, I'm dead.")
+        }
     }
     
     /**
@@ -65,7 +94,10 @@ class Player: TestWeightedElement {
         self.run(SKAction.move(to: direction, duration: 0.1))
     }
     
-    func pickUP(){
+    /**
+     Picks up the closest item in their vincinity.
+     */
+    func grabItem() {
         //Checks the relative TestWeightedStorageCubeElements and "picks" one up
         let weightedNodes = self.parent?.children.filter({ $0 is TestWeightedStorageCubeElement }).map({ node in node as! TestWeightedStorageCubeElement })
         
@@ -80,7 +112,10 @@ class Player: TestWeightedElement {
             }
     }
     
-    func drop(){
+    /**
+     Drops an item the player is carrying, if there is one.
+     */
+    func dropItem() {
         //Checks if contains any TestWeightedStorageCubElement and "drops" it
         let weightedNodes = self.children.filter({ $0 is TestWeightedStorageCubeElement }).map({ node in node as! TestWeightedStorageCubeElement })
         

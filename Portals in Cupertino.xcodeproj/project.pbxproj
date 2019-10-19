@@ -28,6 +28,8 @@
 		BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */; };
 		BFBDCF5423538DBD005A5E20 /* Tilemap.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFBDCF5323538DBD005A5E20 /* Tilemap.sks */; };
 		BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC272E52357794600139E30 /* TestWeightedElement.swift */; };
+		BFD2A758235B8AF8005D00EC /* TestDeadlyElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2A757235B8AF8005D00EC /* TestDeadlyElement.swift */; };
+		BFD2A75A235B8E4C005D00EC /* TestGooElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2A759235B8E4C005D00EC /* TestGooElement.swift */; };
 		BFD9E168235A1CF700FD688E /* TestPedestalButtonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD9E167235A1CF700FD688E /* TestPedestalButtonElement.swift */; };
 		BFD9E16A235A38ED00FD688E /* TestCubeSpawnerElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD9E169235A38ED00FD688E /* TestCubeSpawnerElement.swift */; };
 		BFD9E16D235A546300FD688E /* Vaporize.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFD9E16C235A546300FD688E /* Vaporize.sks */; };
@@ -59,6 +61,8 @@
 		BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestchamberScene.swift; sourceTree = "<group>"; };
 		BFBDCF5323538DBD005A5E20 /* Tilemap.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tilemap.sks; sourceTree = "<group>"; };
 		BFC272E52357794600139E30 /* TestWeightedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedElement.swift; sourceTree = "<group>"; };
+		BFD2A757235B8AF8005D00EC /* TestDeadlyElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDeadlyElement.swift; sourceTree = "<group>"; };
+		BFD2A759235B8E4C005D00EC /* TestGooElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGooElement.swift; sourceTree = "<group>"; };
 		BFD9E167235A1CF700FD688E /* TestPedestalButtonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPedestalButtonElement.swift; sourceTree = "<group>"; };
 		BFD9E169235A38ED00FD688E /* TestCubeSpawnerElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCubeSpawnerElement.swift; sourceTree = "<group>"; };
 		BFD9E16C235A546300FD688E /* Vaporize.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Vaporize.sks; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				BF286CE42358B2F300542A19 /* TestWeightedStorageCubeElement.swift */,
 				BFD9E167235A1CF700FD688E /* TestPedestalButtonElement.swift */,
 				BFD9E169235A38ED00FD688E /* TestCubeSpawnerElement.swift */,
+				BFD2A759235B8E4C005D00EC /* TestGooElement.swift */,
 			);
 			path = "Test Elements";
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */,
 				BF79949C2356628F006F95C3 /* TestOutputElement.swift */,
 				BFC272E52357794600139E30 /* TestWeightedElement.swift */,
+				BFD2A757235B8AF8005D00EC /* TestDeadlyElement.swift */,
 			);
 			path = "Base Elements";
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 				BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */,
 				BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */,
 				BFD9E168235A1CF700FD688E /* TestPedestalButtonElement.swift in Sources */,
+				BFD2A758235B8AF8005D00EC /* TestDeadlyElement.swift in Sources */,
 				BF79949D2356628F006F95C3 /* TestOutputElement.swift in Sources */,
 				BFD9E16A235A38ED00FD688E /* TestCubeSpawnerElement.swift in Sources */,
 				BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */,
@@ -277,6 +284,7 @@
 				BF286CE52358B2F300542A19 /* TestWeightedStorageCubeElement.swift in Sources */,
 				BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */,
 				BF1968F623556B23004E25B0 /* AntlineType.swift in Sources */,
+				BFD2A75A235B8E4C005D00EC /* TestGooElement.swift in Sources */,
 				BF79949923565F1E006F95C3 /* TestWeightedButtonElement.swift in Sources */,
 				BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */,
 				BF1968F923556B5A004E25B0 /* Testchamber.swift in Sources */,

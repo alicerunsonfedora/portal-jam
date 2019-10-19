@@ -39,6 +39,12 @@ struct TestchamberStructure {
             return .door
         case "Concrete_Wall_with_Door":
             return .door
+        case "Goo":
+            return .goo
+        case "Goo_v1":
+            return .goo
+        case "Goo_v2":
+            return .goo
         default:
             return .unknown
         }
