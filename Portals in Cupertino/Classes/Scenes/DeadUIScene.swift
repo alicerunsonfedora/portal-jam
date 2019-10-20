@@ -12,19 +12,27 @@ import SpriteKit
 class DeadUIScene: UIScene {
     
     var restartButton: SKLabelNode?
+    var menuButton: SKLabelNode?
     var flavorTextNode: SKLabelNode?
     
     override func mouseDown(with event: NSEvent) {
         let location = event.location(in: self)
         let touchedNode = self.atPoint(location)
                 
-        if touchedNode == restartButton {
+        switch touchedNode {
+        case restartButton:
             self.goBack()
+            break
+        case menuButton:
+            self.view?.presentScene(SKScene(fileNamed: "MainMenu")!, transition: SKTransition.fade(withDuration: 0.1))
+        default:
+            break
         }
     }
     
     override func didMove(to view: SKView) {
         self.restartButton = childNode(withName: "RestartButton") as! SKLabelNode?
+        self.menuButton = childNode(withName: "MainMenuButton") as! SKLabelNode?
         self.flavorTextNode = childNode(withName: "Flavor") as! SKLabelNode?
         
         super.didMove(to: view)

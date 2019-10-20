@@ -37,6 +37,8 @@
 		BFD9E16A235A38ED00FD688E /* TestCubeSpawnerElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD9E169235A38ED00FD688E /* TestCubeSpawnerElement.swift */; };
 		BFD9E16D235A546300FD688E /* Vaporize.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFD9E16C235A546300FD688E /* Vaporize.sks */; };
 		BFD9E16F235A552900FD688E /* VaporizeTest.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFD9E16E235A552900FD688E /* VaporizeTest.sks */; };
+		BFFC1986235CDF8000F0D3A9 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFFC1985235CDF8000F0D3A9 /* MainMenu.sks */; };
+		BFFC1988235CE54500F0D3A9 /* MainMenuUIScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC1987235CE54500F0D3A9 /* MainMenuUIScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		BFD9E169235A38ED00FD688E /* TestCubeSpawnerElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCubeSpawnerElement.swift; sourceTree = "<group>"; };
 		BFD9E16C235A546300FD688E /* Vaporize.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Vaporize.sks; sourceTree = "<group>"; };
 		BFD9E16E235A552900FD688E /* VaporizeTest.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = VaporizeTest.sks; sourceTree = "<group>"; };
+		BFFC1985235CDF8000F0D3A9 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		BFFC1987235CE54500F0D3A9 /* MainMenuUIScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuUIScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				BFD2A763235CCA5F005D00EC /* Dead.sks */,
+				BFFC1985235CDF8000F0D3A9 /* MainMenu.sks */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 				BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */,
 				BFD2A765235CCD67005D00EC /* UIScene.swift */,
 				BFD2A768235CD02D005D00EC /* DeadUIScene.swift */,
+				BFFC1987235CE54500F0D3A9 /* MainMenuUIScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 				BFD2A764235CCA5F005D00EC /* Dead.sks in Resources */,
 				BFD9E16D235A546300FD688E /* Vaporize.sks in Resources */,
 				BF1ABC8C234E78D50095E5DC /* README.md in Resources */,
+				BFFC1986235CDF8000F0D3A9 /* MainMenu.sks in Resources */,
 				BF1ABC7E234E78090095E5DC /* Assets.xcassets in Resources */,
 				BFBDCF5423538DBD005A5E20 /* Tilemap.sks in Resources */,
 				BF1ABC8B234E78D50095E5DC /* CONTRIBUTING.md in Resources */,
@@ -306,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFFC1988235CE54500F0D3A9 /* MainMenuUIScene.swift in Sources */,
 				BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */,
 				BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */,
 				BFD9E168235A1CF700FD688E /* TestPedestalButtonElement.swift in Sources */,
