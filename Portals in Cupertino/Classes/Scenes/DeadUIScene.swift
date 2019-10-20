@@ -14,6 +14,18 @@ class DeadUIScene: UIScene {
     var restartButton: SKLabelNode?
     var menuButton: SKLabelNode?
     var flavorTextNode: SKLabelNode?
+    let defaultMessage = "Through no fault of the Enrichment Center, you have managed to kill yourself, thus we can no longer accept your test results."
+    let possibleMessages = [
+        "I honestly didn't think you'd fall for that.",
+        "What a disappointment.",
+        "Oh, well. I'll just test the others that are more competent than you.",
+        "I should've seen that coming.",
+        "Dying is NOT a part of the test."
+    ]
+    
+    func pickMessage() {
+        self.flavorTextNode?.text = possibleMessages.randomElement() ?? defaultMessage
+    }
     
     override func mouseDown(with event: NSEvent) {
         let location = event.location(in: self)
@@ -36,6 +48,8 @@ class DeadUIScene: UIScene {
         self.flavorTextNode = childNode(withName: "Flavor") as! SKLabelNode?
         
         super.didMove(to: view)
+        
+        self.pickMessage()
     }
     
 }
