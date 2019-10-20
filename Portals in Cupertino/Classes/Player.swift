@@ -32,6 +32,11 @@ class Player: TestWeightedElement {
     var camera: SKCameraNode?
     
     /**
+     Whether the player is dead.
+     */
+    var isDead: Bool = false
+    
+    /**
      Determine if the player is close to an item.
      - Parameters:
         - node: The node to check for closeness
@@ -63,8 +68,13 @@ class Player: TestWeightedElement {
      Check the current health status and apply any necessary actions
      */
     func checkHealthStatus() {
+        // Check if the player is dead
         if self.health == 0 {
-            print("Oof, ouch, I'm dead.")
+            if !self.isDead {
+                self.camera?.run(SKAction.scaleX(to: 0.3, y: 0.3, duration: 0.1))
+                self.run(SKAction.colorize(with: NSColor.red, colorBlendFactor: 0.9, duration: 0.1))
+                self.isDead = true
+            }
         }
     }
     
@@ -99,7 +109,9 @@ class Player: TestWeightedElement {
      */
     
     func moveTo(direction: CGPoint){
-        self.run(SKAction.move(to: direction, duration: 0.1))
+        if !self.isDead {
+            self.run(SKAction.move(to: direction, duration: 0.1))
+        }
     }
     
     /**

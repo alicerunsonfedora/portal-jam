@@ -386,6 +386,14 @@ class TestchamberScene: SKScene {
         // Update the camera's position
         cameraNode?.position = playerNode!.position
         
+        // Display the "dead" scene if the player is dead
+        if (self.playerNode?.isDead)! {
+            let deathScene = DeadUIScene(fileNamed: "Dead")!
+            deathScene.userData = NSMutableDictionary()
+            deathScene.userData?.setObject(self.name!, forKey: "previousScene" as NSCopying)
+            self.view?.presentScene(deathScene, transition: SKTransition.fade(withDuration: 2.0))
+        }
+        
         // Toggle the door if necessary
         self.exitDoor?.toggleDoor()
         
