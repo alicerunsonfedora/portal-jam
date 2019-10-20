@@ -176,6 +176,7 @@
 		BFAFB7AB2353D45A008249FC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */,
 				BFD2A767235CD01D005D00EC /* Scenes */,
 				BF79949B23566220006F95C3 /* Test Elements */,
 				BF79949A235661A0006F95C3 /* App */,
@@ -214,7 +215,6 @@
 		BFD2A767235CD01D005D00EC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */,
 				BFD2A765235CCD67005D00EC /* UIScene.swift */,
 				BFD2A768235CD02D005D00EC /* DeadUIScene.swift */,
 			);
