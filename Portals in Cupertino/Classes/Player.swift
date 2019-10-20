@@ -27,6 +27,11 @@ class Player: TestWeightedElement {
     var health: Int = 100
     
     /**
+     The player's camera.
+     */
+    var camera: SKCameraNode?
+    
+    /**
      Determine if the player is close to an item.
      - Parameters:
         - node: The node to check for closeness
@@ -67,8 +72,11 @@ class Player: TestWeightedElement {
      Initialize the player.
      - Parameters:
         - texture: The appropriate player texture.
+        - camera: The player's respective camera
      */
-    init(texture: SKTexture?) {
+    init(texture: SKTexture?, camera: SKCameraNode?) {
+        
+        self.camera = camera
         
         super.init(texture:texture, weighted: true)
         

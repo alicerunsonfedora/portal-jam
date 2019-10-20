@@ -71,7 +71,7 @@ class TestchamberScene: SKScene {
                     
                     
                     if elementType == .testSubject {
-                        newTileNode = Player(texture: firstTexture)
+                        newTileNode = Player(texture: firstTexture, camera: self.cameraNode)
                     }
 
                     newTileNode.isHidden = false
@@ -431,20 +431,26 @@ class TestchamberScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        // Set up the tracking area
         let trackingArea = NSTrackingArea(rect: view.frame, options: [.activeInKeyWindow, .mouseMoved, .inVisibleRect], owner: self, userInfo: nil)
         view.addTrackingArea(trackingArea)
         
+        // Set the default ambience color
         self.backgroundColor = #colorLiteral(red: 0.146314883, green: 0.2027438601, blue: 0.236890763, alpha: 1)
-                
+        
+        // Set up the camera
+        self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
+
+        // Start developing the room layout
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
             fatalError("Room layout is missing. Aborting...")
         }
         self.configureLayoutFromTilemap(roomLayout)
         
+        // Start developing the input layers
         for layout in children.filter({ ($0.name?.starts(with: "input_") ?? false) }) {
             self.configureInputSchematic((layout as? SKTileMapNode)!)
         }
         
-        self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
     }
 }
