@@ -389,9 +389,10 @@ class TestchamberScene: SKScene {
         // Display the "dead" scene if the player is dead
         if (self.playerNode?.isDead)! {
             let deathScene = DeadUIScene(fileNamed: "Dead")!
+            let deadColor = #colorLiteral(red: 0.3031606916, green: 0.01700964238, blue: 0, alpha: 1)
             deathScene.userData = NSMutableDictionary()
             deathScene.userData?.setObject(self.name!, forKey: "previousScene" as NSCopying)
-            self.view?.presentScene(deathScene, transition: SKTransition.fade(withDuration: 2.0))
+            self.view?.presentScene(deathScene, transition: SKTransition.fade(with: deadColor, duration: 3.0))
         }
         
         // Toggle the door if necessary
