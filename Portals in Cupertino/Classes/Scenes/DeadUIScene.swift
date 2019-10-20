@@ -24,7 +24,7 @@ class DeadUIScene: UIScene {
             self.goBack()
             break
         case menuButton:
-            self.view?.presentScene(SKScene(fileNamed: "MainMenu")!, transition: SKTransition.fade(withDuration: 0.1))
+            self.view?.presentScene(SKScene(fileNamed: "MainMenu")!)
         default:
             break
         }

@@ -14,7 +14,7 @@ class MainMenuUIScene: SKScene {
     var titleNode: SKLabelNode?
     var startButton: SKLabelNode?
     var quitButton: SKLabelNode?
-    
+        
     override func mouseDown(with event: NSEvent) {
         let location = event.location(in: self)
         let touchedNode = self.atPoint(location)
@@ -30,8 +30,6 @@ class MainMenuUIScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        
-        self.scaleMode = .aspectFill
         
         self.titleNode = childNode(withName: "Title") as! SKLabelNode?
         self.startButton = childNode(withName: "StartButton") as! SKLabelNode?
