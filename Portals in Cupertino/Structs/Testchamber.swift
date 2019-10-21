@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpriteKit
 
 /**
  Basic structure to manage testchamber elements.
@@ -61,5 +62,4 @@ struct TestchamberStructure {
     static func getAntlineType(byDefinition: String) -> AntlineType {
         return Antline.getAntlineType(byDefinition: byDefinition)
     }
-    
 }

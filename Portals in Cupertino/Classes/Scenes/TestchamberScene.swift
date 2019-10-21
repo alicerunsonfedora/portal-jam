@@ -276,12 +276,21 @@ class TestchamberScene: SKScene {
                         break
                     case .pedestalButton:
                         var button: TestPedestalButton?
+                        let direction = TestPedestalButton.getPedestalDirection(forButtonDefinition: tileDefinition)
                         
                         if isExitLayout! {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toExit, node: newTileNode, antlines: antlines)
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                        connectsTo: .toExit,
+                                                        node: newTileNode,
+                                                        antlines: antlines,
+                                                        inDirection: direction)
                             self.exitDoor?.addInput(button!)
                         } else {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toElement, node: newTileNode, antlines: antlines)
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                        connectsTo: .toElement,
+                                                        node: newTileNode,
+                                                        antlines: antlines,
+                                                        inDirection: direction)
                         }
                         
                         for antline in antlines {

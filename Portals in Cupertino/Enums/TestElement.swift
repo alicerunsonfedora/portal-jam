@@ -62,3 +62,11 @@ enum TestElement {
      */
     case unknown
 }
+
+enum TestElementDirection {
+    case north
+    case west
+    case east
+    case south
+    case unknown
+}
