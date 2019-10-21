@@ -23,7 +23,7 @@ class TestDoorElement: TestOutputElement {
         if self.elementNode.physicsBody != nil {
             self.elementNode.physicsBody = nil
         }
-        self.elementNode.run(SKAction.fadeAlpha(to: 0.85, duration: 0.25))
+        self.elementNode.run(SKAction.fadeAlpha(to: 0.7, duration: 0.25))
     }
     
     /**
