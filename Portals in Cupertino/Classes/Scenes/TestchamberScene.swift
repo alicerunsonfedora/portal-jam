@@ -27,6 +27,7 @@ class TestchamberScene: SKScene {
     var inputs: [TestInputElement]?
     var outputs: [TestOutputElement]?
     var cameraNode: SKCameraNode?
+    var victoryLift: TestVictoryLiftElement?
     
     // MARK: Tile Map Configurations
     
@@ -116,6 +117,12 @@ class TestchamberScene: SKScene {
                     case .goo:
                         let goo = TestGooElement(node: newTileNode, player: self.playerNode)
                         deadlyElementList.append(goo)
+                        break
+                        
+                    // Victory lifts: Create the victory lift and watch this scene and the player.
+                    case .victoryLift:
+                        let location = map.userData?.object(forKey: "exitsTo") as? String ?? ""
+                        self.victoryLift = TestVictoryLiftElement(toLocation: location, node: newTileNode, view: self.view)
                         break
                         
                     // Unknown: Disregard.
@@ -406,6 +413,9 @@ class TestchamberScene: SKScene {
         
         // Toggle the door if necessary
         self.exitDoor?.toggleDoor()
+        
+        // Watch if the player steps on the victory lift
+        self.victoryLift?.watchForActivation()
         
         // Check all deadly elements
         if self.deadlyElements != nil {

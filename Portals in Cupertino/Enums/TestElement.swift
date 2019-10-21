@@ -58,6 +58,11 @@ enum TestElement {
     case goo
     
     /**
+     A victory lift, usually used in lieu of an elevator.
+     */
+    case victoryLift
+    
+    /**
      An unknown element. Use this as the "catch-all".
      */
     case unknown

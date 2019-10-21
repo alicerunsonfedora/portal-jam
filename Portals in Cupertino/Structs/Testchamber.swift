@@ -46,6 +46,8 @@ struct TestchamberStructure {
             return .goo
         case "Goo_v2":
             return .goo
+        case "Victory_Lift":
+            return .victoryLift
         default:
             return .unknown
         }
