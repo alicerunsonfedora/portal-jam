@@ -24,8 +24,13 @@
 		BF7994A4235667F6006F95C3 /* TestAntlineElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7994A3235667F6006F95C3 /* TestAntlineElement.swift */; };
 		BF7994A623566BD7006F95C3 /* TestDoorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7994A523566BD7006F95C3 /* TestDoorElement.swift */; };
 		BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */; };
-		BFBDCF5423538DBD005A5E20 /* Tilemap.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFBDCF5323538DBD005A5E20 /* Tilemap.sks */; };
 		BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC272E52357794600139E30 /* TestWeightedElement.swift */; };
+		BFCBF1B2235E2ABF00EA1890 /* Elements.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1AE235E2ABF00EA1890 /* Elements.sks */; };
+		BFCBF1B3235E2ABF00EA1890 /* Antlines.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1AF235E2ABF00EA1890 /* Antlines.sks */; };
+		BFCBF1B4235E2ABF00EA1890 /* Signage.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1B0235E2ABF00EA1890 /* Signage.sks */; };
+		BFCBF1B5235E2ABF00EA1890 /* Layout.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1B1235E2ABF00EA1890 /* Layout.sks */; };
+		BFCBF1B7235E2AD800EA1890 /* Portals.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1B6235E2AD800EA1890 /* Portals.sks */; };
+		BFCBF1B9235E501000EA1890 /* TestVictoryLiftElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCBF1B8235E501000EA1890 /* TestVictoryLiftElement.swift */; };
 		BFD2A758235B8AF8005D00EC /* TestDeadlyElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2A757235B8AF8005D00EC /* TestDeadlyElement.swift */; };
 		BFD2A75A235B8E4C005D00EC /* TestGooElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2A759235B8E4C005D00EC /* TestGooElement.swift */; };
 		BFD2A764235CCA5F005D00EC /* Dead.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFD2A763235CCA5F005D00EC /* Dead.sks */; };
@@ -62,8 +67,13 @@
 		BF7994A3235667F6006F95C3 /* TestAntlineElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAntlineElement.swift; sourceTree = "<group>"; };
 		BF7994A523566BD7006F95C3 /* TestDoorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDoorElement.swift; sourceTree = "<group>"; };
 		BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestchamberScene.swift; sourceTree = "<group>"; };
-		BFBDCF5323538DBD005A5E20 /* Tilemap.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tilemap.sks; sourceTree = "<group>"; };
 		BFC272E52357794600139E30 /* TestWeightedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedElement.swift; sourceTree = "<group>"; };
+		BFCBF1AE235E2ABF00EA1890 /* Elements.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Elements.sks; sourceTree = "<group>"; };
+		BFCBF1AF235E2ABF00EA1890 /* Antlines.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Antlines.sks; sourceTree = "<group>"; };
+		BFCBF1B0235E2ABF00EA1890 /* Signage.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Signage.sks; sourceTree = "<group>"; };
+		BFCBF1B1235E2ABF00EA1890 /* Layout.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Layout.sks; sourceTree = "<group>"; };
+		BFCBF1B6235E2AD800EA1890 /* Portals.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Portals.sks; sourceTree = "<group>"; };
+		BFCBF1B8235E501000EA1890 /* TestVictoryLiftElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVictoryLiftElement.swift; sourceTree = "<group>"; };
 		BFD2A757235B8AF8005D00EC /* TestDeadlyElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDeadlyElement.swift; sourceTree = "<group>"; };
 		BFD2A759235B8E4C005D00EC /* TestGooElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGooElement.swift; sourceTree = "<group>"; };
 		BFD2A763235CCA5F005D00EC /* Dead.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Dead.sks; sourceTree = "<group>"; };
@@ -117,6 +127,7 @@
 		BF1ABC72234E78040095E5DC /* Portals in Cupertino */ = {
 			isa = PBXGroup;
 			children = (
+				BFCBF1AD235E2A9000EA1890 /* Tilemaps */,
 				BFD2A762235CCA41005D00EC /* Scenes */,
 				BFD9E16B235A545400FD688E /* Actions */,
 				BF1968F723556B4F004E25B0 /* Structs */,
@@ -126,7 +137,6 @@
 				BF1ABC7F234E78090095E5DC /* Main.storyboard */,
 				BF1ABC82234E78090095E5DC /* Info.plist */,
 				BF1ABC83234E78090095E5DC /* Portals_in_Cupertino.entitlements */,
-				BFBDCF5323538DBD005A5E20 /* Tilemap.sks */,
 				BFD9E16E235A552900FD688E /* VaporizeTest.sks */,
 			);
 			path = "Portals in Cupertino";
@@ -152,6 +162,7 @@
 				BFD9E167235A1CF700FD688E /* TestPedestalButtonElement.swift */,
 				BFD9E169235A38ED00FD688E /* TestCubeSpawnerElement.swift */,
 				BFD2A759235B8E4C005D00EC /* TestGooElement.swift */,
+				BFCBF1B8235E501000EA1890 /* TestVictoryLiftElement.swift */,
 			);
 			path = "Test Elements";
 			sourceTree = "<group>";
@@ -194,6 +205,18 @@
 				BF1968F523556B23004E25B0 /* AntlineType.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		BFCBF1AD235E2A9000EA1890 /* Tilemaps */ = {
+			isa = PBXGroup;
+			children = (
+				BFCBF1AF235E2ABF00EA1890 /* Antlines.sks */,
+				BFCBF1AE235E2ABF00EA1890 /* Elements.sks */,
+				BFCBF1B1235E2ABF00EA1890 /* Layout.sks */,
+				BFCBF1B6235E2AD800EA1890 /* Portals.sks */,
+				BFCBF1B0235E2ABF00EA1890 /* Signage.sks */,
+			);
+			path = Tilemaps;
 			sourceTree = "<group>";
 		};
 		BFD2A761235CCA34005D00EC /* User Interface */ = {
@@ -294,9 +317,13 @@
 				BFD2A764235CCA5F005D00EC /* Dead.sks in Resources */,
 				BFD9E16D235A546300FD688E /* Vaporize.sks in Resources */,
 				BFFC1986235CDF8000F0D3A9 /* MainMenu.sks in Resources */,
+				BFCBF1B5235E2ABF00EA1890 /* Layout.sks in Resources */,
+				BFCBF1B2235E2ABF00EA1890 /* Elements.sks in Resources */,
 				BF1ABC7E234E78090095E5DC /* Assets.xcassets in Resources */,
-				BFBDCF5423538DBD005A5E20 /* Tilemap.sks in Resources */,
 				BF5C17D2235398500026C1C2 /* Sample.sks in Resources */,
+				BFCBF1B7235E2AD800EA1890 /* Portals.sks in Resources */,
+				BFCBF1B4235E2ABF00EA1890 /* Signage.sks in Resources */,
+				BFCBF1B3235E2ABF00EA1890 /* Antlines.sks in Resources */,
 				BF1ABC81234E78090095E5DC /* Main.storyboard in Resources */,
 				BFD9E16F235A552900FD688E /* VaporizeTest.sks in Resources */,
 			);
@@ -321,6 +348,7 @@
 				BF7994A4235667F6006F95C3 /* TestAntlineElement.swift in Sources */,
 				BF286CE52358B2F300542A19 /* TestWeightedStorageCubeElement.swift in Sources */,
 				BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */,
+				BFCBF1B9235E501000EA1890 /* TestVictoryLiftElement.swift in Sources */,
 				BF1968F623556B23004E25B0 /* AntlineType.swift in Sources */,
 				BFD2A766235CCD67005D00EC /* UIScene.swift in Sources */,
 				BFD2A75A235B8E4C005D00EC /* TestGooElement.swift in Sources */,

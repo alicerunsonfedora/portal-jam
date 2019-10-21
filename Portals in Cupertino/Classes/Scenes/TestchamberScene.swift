@@ -14,19 +14,65 @@ import Carbon.HIToolbox
 /**
  A basic testchamber scene with tilemaps for a test layout.
  
- Each testchamber should include and exit door, walls, a player, inputs, outputs, and a camera that follows the player. Testchambers made with SpriteKit use this class to set up the scene and make it solvable/playable.
+ Each testchamber should include and exit door, a player, inputs, outputs, and a camera that follows the player. Testchambers made with SpriteKit use this class to set up the scene and make it solvable/playable.
+ 
+ - Important:
+ It is important to note that the testchamber should also have a room layout with walls, deadly elements, and the victory lift. The layout's tile map needs the `exitsTo` user data field if it contains a victory lift to control where the victory lift will transport the player to.
+ 
+ - Requires:
+    Each testchamber should have a layout like the following:
+ 
+    - `backgroundLayout`: A tilemap node containing the basic floor layout. Usually has a `zPosition` of `-20`.
+    - `floorDecorLayout`: A tilemap node containing the floor signage. Usually has a `zPosition` of `-10`.
+    - Input layers, prefixed with `input_`: Tilemaps containing all of the inputs and outputs of the testchamber. Each input should have a child tilemap for antlines, though that tilemap _can_ be empty. There also _must_ be an `input_exitLayout` tilemap for the exit door. These should be reasonably placed in the z-axis.
+    - `roomLayout`: A tilemap node containg all of the walls, deadly elements, victory lift, and player tiles. The z-position won't matter much since this class will handle all of the "parsing".
+    - `decorLayout`: A tilemap node containing all of the signange on the walls.  Usually has a `zPosition` of `20`.
+    - `playerCamera`: A camera node placed over the player's head.
+    - Light nodes: Light nodes for lighting up the scene.
  */
 class TestchamberScene: SKScene {
     
     // MARK: Attributes
     
+    /**
+     The testchamber's exit door.
+     */
     var exitDoor: TestDoorElement?
+    
+    /**
+     A list containing all of the walls in this testchamber.
+     */
     var walls: [SKSpriteNode]?
+    
+    /**
+     A list containing all of the deadly elements in this testchamber such as deadly goo or turrets.
+     */
     var deadlyElements: [TestDeadlyElement]?
+    
+    /**
+     The main player node.
+     */
     var playerNode: Player?
+    
+    /**
+     A list containing the inputs in this testchamber.
+     */
     var inputs: [TestInputElement]?
+    
+    /**
+     A list containing the outputs in this testchamber.
+     */
     var outputs: [TestOutputElement]?
+    
+    /**
+     The main camera node attached to the player.
+     */
     var cameraNode: SKCameraNode?
+    
+    /**
+     The victory lift for this testchamber.
+     */
+    var victoryLift: TestVictoryLiftElement?
     
     // MARK: Tile Map Configurations
     
@@ -116,6 +162,12 @@ class TestchamberScene: SKScene {
                     case .goo:
                         let goo = TestGooElement(node: newTileNode, player: self.playerNode)
                         deadlyElementList.append(goo)
+                        break
+                        
+                    // Victory lifts: Create the victory lift and watch this scene and the player.
+                    case .victoryLift:
+                        let location = map.userData?.object(forKey: "exitsTo") as? String ?? ""
+                        self.victoryLift = TestVictoryLiftElement(toLocation: location, node: newTileNode, view: self.view)
                         break
                         
                     // Unknown: Disregard.
@@ -276,12 +328,21 @@ class TestchamberScene: SKScene {
                         break
                     case .pedestalButton:
                         var button: TestPedestalButton?
+                        let direction = TestPedestalButton.getPedestalDirection(forButtonDefinition: tileDefinition)
                         
                         if isExitLayout! {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toExit, node: newTileNode, antlines: antlines)
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                        connectsTo: .toExit,
+                                                        node: newTileNode,
+                                                        antlines: antlines,
+                                                        inDirection: direction)
                             self.exitDoor?.addInput(button!)
                         } else {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toElement, node: newTileNode, antlines: antlines)
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                        connectsTo: .toElement,
+                                                        node: newTileNode,
+                                                        antlines: antlines,
+                                                        inDirection: direction)
                         }
                         
                         for antline in antlines {
@@ -397,6 +458,9 @@ class TestchamberScene: SKScene {
         
         // Toggle the door if necessary
         self.exitDoor?.toggleDoor()
+        
+        // Watch if the player steps on the victory lift
+        self.victoryLift?.watchForActivation()
         
         // Check all deadly elements
         if self.deadlyElements != nil {
