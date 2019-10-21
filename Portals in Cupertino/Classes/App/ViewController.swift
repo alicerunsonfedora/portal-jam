@@ -17,7 +17,15 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let scene = GKScene(fileNamed: "Sample") {
+        var fileName = "MainMenu"
+        
+        if CommandLine.arguments.count > 1 {
+            if CommandLine.arguments[1] == "--skip-menu" {
+                fileName = "Sample"
+            }
+        }
+        
+        if let scene = GKScene(fileNamed: fileName) {
             
             // Get the SKScene from the loaded GKScene
             if let sceneNode = scene.rootNode as! SKScene? {
@@ -31,8 +39,8 @@ class ViewController: NSViewController {
                     
                     view.ignoresSiblingOrder = true
                     
-                    view.showsFPS = true
-                    view.showsNodeCount = true
+//                    view.showsFPS = true
+//                    view.showsNodeCount = true
                 }
             }
         }

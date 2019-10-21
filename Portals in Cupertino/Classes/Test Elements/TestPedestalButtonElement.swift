@@ -21,6 +21,21 @@ class TestPedestalButton: TestInputElement {
      */
     var timeout: Double = 3.0
     
+    static func getPedestalDirection(forButtonDefinition: SKTileDefinition) -> TestElementDirection {
+        switch forButtonDefinition.rotation {
+        case .rotation0:
+            return .north
+        case .rotation90:
+            return .west
+        case .rotation180:
+            return .south
+        case .rotation270:
+            return .east
+        default:
+            return .unknown
+        }
+    }
+    
     /**
      Activate the button and deactivate after the specified timeout.
      */
@@ -44,13 +59,27 @@ class TestPedestalButton: TestInputElement {
         - node: The associated `SKSpriteNode` for the button
         - antlines: The button's antlines, if any
      */
-    init(timeoutAfter: Double?, connectsTo: TestInputType, node: SKSpriteNode, antlines: [Antline]?) {
+    init(timeoutAfter: Double?, connectsTo: TestInputType, node: SKSpriteNode, antlines: [Antline]?, inDirection: TestElementDirection) {
         
         if timeoutAfter != nil {
             self.timeout = timeoutAfter!
         }
         
         super.init(connectsTo: connectsTo, node: node, textureName: "Pedestal_Button", antlines: antlines)
+        
+        switch inDirection {
+        case .west:
+            self.elementNode.zRotation = .pi / 2
+            break
+        case .south:
+            self.elementNode.zRotation = .pi
+            break
+        case .east:
+            self.elementNode.zRotation = (3 * .pi) / 2
+            break
+        default:
+            break
+        }
         
     }
     

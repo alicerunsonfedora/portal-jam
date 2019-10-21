@@ -32,6 +32,9 @@ enum TestElement {
      */
     case pedestalButton
     
+    /**
+     A cube spawner
+     */
     case cubeSpawner
     
     /**
@@ -50,7 +53,25 @@ enum TestElement {
     case testSubject
     
     /**
+     Deadly goo.
+     */
+    case goo
+    
+    /**
+     A victory lift, usually used in lieu of an elevator.
+     */
+    case victoryLift
+    
+    /**
      An unknown element. Use this as the "catch-all".
      */
+    case unknown
+}
+
+enum TestElementDirection {
+    case north
+    case west
+    case east
+    case south
     case unknown
 }

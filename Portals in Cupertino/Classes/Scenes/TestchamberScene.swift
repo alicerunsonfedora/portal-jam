@@ -14,18 +14,65 @@ import Carbon.HIToolbox
 /**
  A basic testchamber scene with tilemaps for a test layout.
  
- Each testchamber should include and exit door, walls, a player, inputs, outputs, and a camera that follows the player. Testchambers made with SpriteKit use this class to set up the scene and make it solvable/playable.
+ Each testchamber should include and exit door, a player, inputs, outputs, and a camera that follows the player. Testchambers made with SpriteKit use this class to set up the scene and make it solvable/playable.
+ 
+ - Important:
+ It is important to note that the testchamber should also have a room layout with walls, deadly elements, and the victory lift. The layout's tile map needs the `exitsTo` user data field if it contains a victory lift to control where the victory lift will transport the player to.
+ 
+ - Requires:
+    Each testchamber should have a layout like the following:
+ 
+    - `backgroundLayout`: A tilemap node containing the basic floor layout. Usually has a `zPosition` of `-20`.
+    - `floorDecorLayout`: A tilemap node containing the floor signage. Usually has a `zPosition` of `-10`.
+    - Input layers, prefixed with `input_`: Tilemaps containing all of the inputs and outputs of the testchamber. Each input should have a child tilemap for antlines, though that tilemap _can_ be empty. There also _must_ be an `input_exitLayout` tilemap for the exit door. These should be reasonably placed in the z-axis.
+    - `roomLayout`: A tilemap node containg all of the walls, deadly elements, victory lift, and player tiles. The z-position won't matter much since this class will handle all of the "parsing".
+    - `decorLayout`: A tilemap node containing all of the signange on the walls.  Usually has a `zPosition` of `20`.
+    - `playerCamera`: A camera node placed over the player's head.
+    - Light nodes: Light nodes for lighting up the scene.
  */
 class TestchamberScene: SKScene {
     
     // MARK: Attributes
     
+    /**
+     The testchamber's exit door.
+     */
     var exitDoor: TestDoorElement?
+    
+    /**
+     A list containing all of the walls in this testchamber.
+     */
     var walls: [SKSpriteNode]?
+    
+    /**
+     A list containing all of the deadly elements in this testchamber such as deadly goo or turrets.
+     */
+    var deadlyElements: [TestDeadlyElement]?
+    
+    /**
+     The main player node.
+     */
     var playerNode: Player?
+    
+    /**
+     A list containing the inputs in this testchamber.
+     */
     var inputs: [TestInputElement]?
+    
+    /**
+     A list containing the outputs in this testchamber.
+     */
     var outputs: [TestOutputElement]?
+    
+    /**
+     The main camera node attached to the player.
+     */
     var cameraNode: SKCameraNode?
+    
+    /**
+     The victory lift for this testchamber.
+     */
+    var victoryLift: TestVictoryLiftElement?
     
     // MARK: Tile Map Configurations
     
@@ -44,6 +91,10 @@ class TestchamberScene: SKScene {
         let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * tileMapSize.width
         let halfHeight = CGFloat(map.numberOfRows) / 2.0 * tileMapSize.height
         let tileMapPosition = map.position
+        
+        // Create an empty goo array
+        var deadlyElementList = [TestDeadlyElement]()
+        var player: Player?
         
         // Iterate over every item in the tile map
         for y in 0 ..< map.numberOfColumns {
@@ -66,7 +117,7 @@ class TestchamberScene: SKScene {
                     
                     
                     if elementType == .testSubject {
-                        newTileNode = Player(texture: firstTexture)
+                        newTileNode = Player(texture: firstTexture, camera: self.cameraNode)
                     }
 
                     newTileNode.isHidden = false
@@ -95,12 +146,28 @@ class TestchamberScene: SKScene {
                     // Check the tile node's definition and create the respective objects.
                     switch (elementType) {
                         
-                    // Players: Assign the player node
-                    //          And physics specific to player
+                    // Players: Assign the player node and add this to every deadly item.
                     case .testSubject:
                         if newTileNode is Player {
-                            self.playerNode = newTileNode as? Player
+                            player = newTileNode as? Player
                         }
+                        
+                        for deadlyElement in deadlyElementList {
+                            deadlyElement.assignPlayer(to: player)
+                        }
+                        
+                        break
+                    
+                    // Deadly Goo: Create deadly goo and watch the current player
+                    case .goo:
+                        let goo = TestGooElement(node: newTileNode, player: self.playerNode)
+                        deadlyElementList.append(goo)
+                        break
+                        
+                    // Victory lifts: Create the victory lift and watch this scene and the player.
+                    case .victoryLift:
+                        let location = map.userData?.object(forKey: "exitsTo") as? String ?? ""
+                        self.victoryLift = TestVictoryLiftElement(toLocation: location, node: newTileNode, view: self.view)
                         break
                         
                     // Unknown: Disregard.
@@ -124,6 +191,10 @@ class TestchamberScene: SKScene {
                 
             }
         }
+        
+        // Assign the player and any goo
+        self.deadlyElements = self.deadlyElements ?? [] + deadlyElementList
+        self.playerNode = player
         
         // Remove the tilemap
         map.removeFromParent()
@@ -257,12 +328,21 @@ class TestchamberScene: SKScene {
                         break
                     case .pedestalButton:
                         var button: TestPedestalButton?
+                        let direction = TestPedestalButton.getPedestalDirection(forButtonDefinition: tileDefinition)
                         
                         if isExitLayout! {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toExit, node: newTileNode, antlines: antlines)
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                        connectsTo: .toExit,
+                                                        node: newTileNode,
+                                                        antlines: antlines,
+                                                        inDirection: direction)
                             self.exitDoor?.addInput(button!)
                         } else {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double, connectsTo: .toElement, node: newTileNode, antlines: antlines)
+                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                        connectsTo: .toElement,
+                                                        node: newTileNode,
+                                                        antlines: antlines,
+                                                        inDirection: direction)
                         }
                         
                         for antline in antlines {
@@ -311,6 +391,7 @@ class TestchamberScene: SKScene {
         let playerY = playerNode?.position.y
         let targetX = location.x
         let targetY = location.y
+        
         //Gets the angle between the two and makes that the direction move the player to face
         let rotation = atan2((targetY - playerY!), (targetX - playerX!))
         playerNode?.zRotation = rotation - (.pi / 2)
@@ -340,10 +421,10 @@ class TestchamberScene: SKScene {
         
         case kVK_ANSI_E:
             if (playerNode?.isCarrying ?? false) {
-                playerNode?.drop()
+                playerNode?.dropItem()
             }
             else {
-                playerNode?.pickUP()
+                playerNode?.grabItem()
             }
             
             if self.inputs != nil {
@@ -364,8 +445,38 @@ class TestchamberScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        // Update the camera's position
         cameraNode?.position = playerNode!.position
-                
+        
+        // Display the "dead" scene if the player is dead
+        if (self.playerNode?.isDead)! {
+            let deathScene = DeadUIScene(fileNamed: "Dead")!
+            let deadColor = #colorLiteral(red: 0.3031606916, green: 0.01700964238, blue: 0, alpha: 1)
+            deathScene.userData = NSMutableDictionary()
+            deathScene.userData?.setObject(self.name!, forKey: "previousScene" as NSCopying)
+            self.view?.presentScene(deathScene, transition: SKTransition.fade(with: deadColor, duration: 3.0))
+        }
+        
+        // Toggle the door if necessary
+        self.exitDoor?.toggleDoor()
+        
+        // Watch if the player steps on the victory lift
+        self.victoryLift?.watchForActivation()
+        
+        // Check all deadly elements
+        if self.deadlyElements != nil {
+            for deadlyElement in self.deadlyElements! {
+                switch deadlyElement {
+                case (is TestGooElement):
+                    (deadlyElement as! TestGooElement).scanForDamage()
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        
+        // Check all inputs
         if self.inputs != nil {
             for input in self.inputs! {
                 if input is TestWeightedButtonElement {
@@ -375,8 +486,7 @@ class TestchamberScene: SKScene {
             }
         }
         
-        self.exitDoor?.toggleDoor()
-        
+        // Check all outputs
         if self.outputs != nil {
             for output in self.outputs! {
                 switch output {
@@ -395,18 +505,26 @@ class TestchamberScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        // Set up the tracking area
         let trackingArea = NSTrackingArea(rect: view.frame, options: [.activeInKeyWindow, .mouseMoved, .inVisibleRect], owner: self, userInfo: nil)
         view.addTrackingArea(trackingArea)
-                
+        
+        // Set the default ambience color
+        self.backgroundColor = #colorLiteral(red: 0.146314883, green: 0.2027438601, blue: 0.236890763, alpha: 1)
+        
+        // Set up the camera
+        self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
+
+        // Start developing the room layout
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
             fatalError("Room layout is missing. Aborting...")
         }
         self.configureLayoutFromTilemap(roomLayout)
         
+        // Start developing the input layers
         for layout in children.filter({ ($0.name?.starts(with: "input_") ?? false) }) {
             self.configureInputSchematic((layout as? SKTileMapNode)!)
         }
         
-        self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
     }
 }

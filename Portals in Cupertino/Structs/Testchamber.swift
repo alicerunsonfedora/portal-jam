@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpriteKit
 
 /**
  Basic structure to manage testchamber elements.
@@ -39,6 +40,14 @@ struct TestchamberStructure {
             return .door
         case "Concrete_Wall_with_Door":
             return .door
+        case "Goo":
+            return .goo
+        case "Goo_v1":
+            return .goo
+        case "Goo_v2":
+            return .goo
+        case "Victory_Lift":
+            return .victoryLift
         default:
             return .unknown
         }
@@ -55,5 +64,4 @@ struct TestchamberStructure {
     static func getAntlineType(byDefinition: String) -> AntlineType {
         return Antline.getAntlineType(byDefinition: byDefinition)
     }
-    
 }
