@@ -19,8 +19,10 @@ class ViewController: NSViewController {
         
         var fileName = "MainMenu"
         
-        if CommandLine.arguments[1] == "--skip-menu" {
-            fileName = "Sample"
+        if CommandLine.arguments.count > 1 {
+            if CommandLine.arguments[1] == "--skip-menu" {
+                fileName = "Sample"
+            }
         }
         
         if let scene = GKScene(fileNamed: fileName) {
