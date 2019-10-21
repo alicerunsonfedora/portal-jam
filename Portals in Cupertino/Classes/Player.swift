@@ -16,8 +16,32 @@ import SpriteKit
  */
 class Player: TestWeightedElement {
     
+    /**
+     Whether the player is currently carrying an item. Defaults to `false`.
+     */
     var isCarrying: Bool = false
     
+    /**
+     The player's current health. Defaults to `100`.
+     */
+    var health: Int = 100
+    
+    /**
+     The player's camera.
+     */
+    var camera: SKCameraNode?
+    
+    /**
+     Whether the player is dead.
+     */
+    var isDead: Bool = false
+    
+    /**
+     Determine if the player is close to an item.
+     - Parameters:
+        - node: The node to check for closeness
+     - Returns: Boolean dictating whether the player is near an item
+     */
     func isCloseTo(node: SKNode) -> Bool {
         let dx = pow((node.position.x - self.position.x), 2)
         let dy = pow((node.position.y - self.position.y), 2)
@@ -26,6 +50,12 @@ class Player: TestWeightedElement {
         return distance <= 50
     }
     
+    /**
+     Determine if the player is facing an item.
+     - Parameters:
+        - node: The node to check for proximity
+     - Returns: Boolean dictating whether the player is facing an item
+     */
     func isFacing(node: SKNode) -> Bool {
         let dx = node.position.x - self.position.x
         let dy = node.position.y - self.position.y
@@ -35,11 +65,28 @@ class Player: TestWeightedElement {
     }
     
     /**
+     Check the current health status and apply any necessary actions
+     */
+    func checkHealthStatus() {
+        // Check if the player is dead
+        if self.health == 0 {
+            if !self.isDead {
+                self.camera?.run(SKAction.scaleX(to: 0.3, y: 0.3, duration: 0.1))
+                self.run(SKAction.colorize(with: NSColor.red, colorBlendFactor: 0.9, duration: 0.1))
+                self.isDead = true
+            }
+        }
+    }
+    
+    /**
      Initialize the player.
      - Parameters:
         - texture: The appropriate player texture.
+        - camera: The player's respective camera
      */
-    init(texture: SKTexture?) {
+    init(texture: SKTexture?, camera: SKCameraNode?) {
+        
+        self.camera = camera
         
         super.init(texture:texture, weighted: true)
         
@@ -62,10 +109,15 @@ class Player: TestWeightedElement {
      */
     
     func moveTo(direction: CGPoint){
-        self.run(SKAction.move(to: direction, duration: 0.1))
+        if !self.isDead {
+            self.run(SKAction.move(to: direction, duration: 0.1))
+        }
     }
     
-    func pickUP(){
+    /**
+     Picks up the closest item in their vincinity.
+     */
+    func grabItem() {
         //Checks the relative TestWeightedStorageCubeElements and "picks" one up
         let weightedNodes = self.parent?.children.filter({ $0 is TestWeightedStorageCubeElement }).map({ node in node as! TestWeightedStorageCubeElement })
         
@@ -80,7 +132,10 @@ class Player: TestWeightedElement {
             }
     }
     
-    func drop(){
+    /**
+     Drops an item the player is carrying, if there is one.
+     */
+    func dropItem() {
         //Checks if contains any TestWeightedStorageCubElement and "drops" it
         let weightedNodes = self.children.filter({ $0 is TestWeightedStorageCubeElement }).map({ node in node as! TestWeightedStorageCubeElement })
         
