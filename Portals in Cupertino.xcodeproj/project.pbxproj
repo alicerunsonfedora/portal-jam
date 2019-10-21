@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		98613EFA2354E116005CBA66 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98613EF92354E116005CBA66 /* Player.swift */; };
+		98B5F8D5235CD5F000BC0579 /* Portals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5F8D4235CD5F000BC0579 /* Portals.swift */; };
 		BF0DA30D2354E8D1005A4A26 /* TestInputElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */; };
 		BF0DA30F2354F617005A4A26 /* TestElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA30E2354F617005A4A26 /* TestElement.swift */; };
 		BF0DA31123550FED005A4A26 /* TestInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DA31023550FED005A4A26 /* TestInputTypes.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		98613EF92354E116005CBA66 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		98B5F8D4235CD5F000BC0579 /* Portals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portals.swift; sourceTree = "<group>"; };
 		BF0DA30C2354E8D1005A4A26 /* TestInputElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInputElement.swift; sourceTree = "<group>"; };
 		BF0DA30E2354F617005A4A26 /* TestElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestElement.swift; sourceTree = "<group>"; };
 		BF0DA31023550FED005A4A26 /* TestInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInputTypes.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				BF79949A235661A0006F95C3 /* App */,
 				BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */,
 				98613EF92354E116005CBA66 /* Player.swift */,
+				98B5F8D4235CD5F000BC0579 /* Portals.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				BF7994A623566BD7006F95C3 /* TestDoorElement.swift in Sources */,
 				98613EFA2354E116005CBA66 /* Player.swift in Sources */,
 				BF1ABC74234E78040095E5DC /* AppDelegate.swift in Sources */,
+				98B5F8D5235CD5F000BC0579 /* Portals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -316,6 +316,7 @@ class TestchamberScene: SKScene {
         playerNode?.zRotation = rotation - (.pi / 2)
     }
     
+    
     override func keyDown(with event: NSEvent) {
         //Gets the code of the key pressed on the keyboard
         switch Int(event.keyCode) {
