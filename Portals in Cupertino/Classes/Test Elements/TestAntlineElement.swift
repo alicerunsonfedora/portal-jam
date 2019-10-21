@@ -76,7 +76,7 @@ class Antline: TestOutputElement {
         case .vertical:
             self.elementNode.zRotation = .pi / 2
         case .leftToBottom:
-            self.elementNode.zRotation = .pi / 2
+            self.elementNode.zRotation = .pi
         case .bottomToRight:
             self.elementNode.zRotation = 2 * .pi
         case .topToRight:
