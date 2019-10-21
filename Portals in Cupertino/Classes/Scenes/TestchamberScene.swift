@@ -16,6 +16,7 @@ import Carbon.HIToolbox
  
  Each testchamber should include and exit door, a player, inputs, outputs, and a camera that follows the player. Testchambers made with SpriteKit use this class to set up the scene and make it solvable/playable.
  
+ - Important:
  It is important to note that the testchamber should also have a room layout with walls, deadly elements, and the victory lift. The layout's tile map needs the `exitsTo` user data field if it contains a victory lift to control where the victory lift will transport the player to.
  
  - Requires:
