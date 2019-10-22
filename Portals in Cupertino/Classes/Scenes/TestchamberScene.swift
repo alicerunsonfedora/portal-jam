@@ -77,6 +77,42 @@ class TestchamberScene: SKScene {
     // MARK: Tile Map Configurations
     
     /**
+     Parses through a tilemap and perform an action on each tile node.
+     
+     This function is primarily a higher-order function that will calculate properties of the tilemap and then proceed to iterate over every tile in the tilemap based on the `parse` function defined, either as a parameter or as a closure.
+     
+     - Parameters:
+        - map: The `SKTileMapNode` to parse.
+        - parse: The function to determine how to parse the tilemap.
+     
+     - Important:
+    The parse function should consider the following parameters passed to it (in order of the list):
+        - The tile definition itself (`SKTileDefinition`)
+        - A coordinate point containing the iterated point in the tile map (eg. it's x and y) (`CGPoint`)
+        - The size of the tile. (`CGSize`)
+        - The calculated hald-width (`CGFloat`)
+        - The calculate half-height (`CGFloat`)
+        - The map's own position (`CGPoint`)
+     This function should also be void, meaning that there isn't a return statement.
+     */
+    func parseTileMap(_ map: SKTileMapNode, parse: ((SKTileDefinition, CGPoint, CGSize, CGFloat, CGFloat, CGPoint) -> Void)) {
+        // Grab the position and the size of the tilemap for reference
+        let mapSize = map.tileSize
+        let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * mapSize.width
+        let halfHeight = CGFloat(map.numberOfRows) / 2.0 * mapSize.height
+        let mapPosition = map.position
+        
+        for y in 0 ..< map.numberOfColumns {
+            for x in 0 ..< map.numberOfRows {
+                if let tileDefinition = map.tileDefinition(atColumn: y, row: x) {
+                    parse(tileDefinition, CGPoint(x: x, y: y), mapSize, halfWidth, halfHeight, mapPosition)
+                }
+            }
+        }
+        
+    }
+    
+    /**
      Generate all of the appropriate sprite nodes from the layout's tile map.
      
      This function is used to keep track of the walls, doors, and player's starting position in the room. It generates a list of walls and locates the exit door, as well as where the player is.
@@ -86,112 +122,100 @@ class TestchamberScene: SKScene {
      */
     func configureLayoutFromTilemap(_ map: SKTileMapNode) {
         
-        // Create some constants to keep track of things
-        let tileMapSize = map.tileSize
-        let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * tileMapSize.width
-        let halfHeight = CGFloat(map.numberOfRows) / 2.0 * tileMapSize.height
-        let tileMapPosition = map.position
-        
         // Create an empty goo array
         var deadlyElementList = [TestDeadlyElement]()
         var player: Player?
         
-        // Iterate over every item in the tile map
-        for y in 0 ..< map.numberOfColumns {
-            for x in 0 ..< map.numberOfRows {
+        self.parseTileMap(map){ tileDefinition, coordinate, tileMapSize, halfWidth, halfHeight, tileMapPosition in
                 
-                if let tileDefinition = map.tileDefinition(atColumn: y, row: x) {
-                    
-                    // Get the texture of the tile
-                    let tileTextures = tileDefinition.textures
-                    let firstTexture = tileTextures[0]
-                    let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
-                    
-                    // Calculate the tile's position
-                    let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
-                    let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
-                    
-                    // Create a new node with the tile's texture. If it's a player,
-                    // use the Player class instead.
-                    var newTileNode = SKSpriteNode(texture: firstTexture)
-                    
-                    
-                    if elementType == .testSubject {
-                        newTileNode = Player(texture: firstTexture, camera: self.cameraNode)
-                    }
+            let x = coordinate.x
+            let y = coordinate.y
+            
+            let tileTextures = tileDefinition.textures
+            let firstTexture = tileTextures[0]
+            let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
+            
+            // Calculate the tile's position
+            let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+            let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+            
+            // Create a new node with the tile's texture. If it's a player,
+            // use the Player class instead.
+            var newTileNode = SKSpriteNode(texture: firstTexture)
+            
+            
+            if elementType == .testSubject {
+                newTileNode = Player(texture: firstTexture, camera: self.cameraNode)
+            }
 
-                    newTileNode.isHidden = false
-                    
-                    // Place the node at the calculated position
-                    newTileNode.position = CGPoint(x: nodeX, y: nodeY)
-                    newTileNode.zPosition = 1
-                    
-                    // Add the lighting mask
-                    newTileNode.lightingBitMask = 0b0001
-                    
-                    // Assign a physics body to the node and change its properties.
-                    if (elementType != .testSubject) {
-                        newTileNode.physicsBody = SKPhysicsBody(texture: firstTexture,
-                                          size: CGSize(width: (firstTexture.size().width),
-                                          height: (firstTexture.size().height)))
-                        newTileNode.physicsBody?.restitution = 0 // Not bouncy
-                        newTileNode.physicsBody?.isDynamic = false // Immovable
-                        newTileNode.physicsBody?.affectedByGravity = false
-                        newTileNode.physicsBody?.linearDamping = 1000.0 // Dampens velocity between other nodes (eg. stops the player)
-                        newTileNode.physicsBody?.allowsRotation = false // Doesn't rotate
-                        newTileNode.physicsBody?.friction = 0.7
-                    }
-                    
-                    
-                    // Check the tile node's definition and create the respective objects.
-                    switch (elementType) {
-                        
-                    // Players: Assign the player node and add this to every deadly item.
-                    case .testSubject:
-                        if newTileNode is Player {
-                            player = newTileNode as? Player
-                        }
-                        
-                        for deadlyElement in deadlyElementList {
-                            deadlyElement.assignPlayer(to: player)
-                        }
-                        
-                        break
-                    
-                    // Deadly Goo: Create deadly goo and watch the current player
-                    case .goo:
-                        let goo = TestGooElement(node: newTileNode, player: self.playerNode)
-                        deadlyElementList.append(goo)
-                        break
-                        
-                    // Victory lifts: Create the victory lift and watch this scene and the player.
-                    case .victoryLift:
-                        let location = map.userData?.object(forKey: "exitsTo") as? String ?? ""
-                        self.victoryLift = TestVictoryLiftElement(toLocation: location, node: newTileNode, view: self.view)
-                        break
-                        
-                    // Unknown: Disregard.
-                    case .unknown:
-                        break
-                        
-                    // Default (wall): Add to list of walls.
-                    default:
-                        self.walls?.append(newTileNode)
-                        break
-                    }
-                    
-                    
-                    // Add the node as a child
-                    self.addChild(newTileNode)
-                    
-                    // Fix the position again
-                    newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,
-                                                   y: newTileNode.position.y + tileMapPosition.y)
+            newTileNode.isHidden = false
+            
+            // Place the node at the calculated position
+            newTileNode.position = CGPoint(x: nodeX, y: nodeY)
+            newTileNode.zPosition = 1
+            
+            // Add the lighting mask
+            newTileNode.lightingBitMask = 0b0001
+            
+            // Assign a physics body to the node and change its properties.
+            if (elementType != .testSubject) {
+                newTileNode.physicsBody = SKPhysicsBody(texture: firstTexture,
+                                  size: CGSize(width: (firstTexture.size().width),
+                                  height: (firstTexture.size().height)))
+                newTileNode.physicsBody?.restitution = 0 // Not bouncy
+                newTileNode.physicsBody?.isDynamic = false // Immovable
+                newTileNode.physicsBody?.affectedByGravity = false
+                newTileNode.physicsBody?.linearDamping = 1000.0 // Dampens velocity between other nodes (eg. stops the player)
+                newTileNode.physicsBody?.allowsRotation = false // Doesn't rotate
+                newTileNode.physicsBody?.friction = 0.7
+            }
+            
+            
+            // Check the tile node's definition and create the respective objects.
+            switch (elementType) {
+                
+            // Players: Assign the player node and add this to every deadly item.
+            case .testSubject:
+                if newTileNode is Player {
+                    player = newTileNode as? Player
                 }
                 
+                for deadlyElement in deadlyElementList {
+                    deadlyElement.assignPlayer(to: player)
+                }
+                
+                break
+            
+            // Deadly Goo: Create deadly goo and watch the current player
+            case .goo:
+                let goo = TestGooElement(node: newTileNode, player: self.playerNode)
+                deadlyElementList.append(goo)
+                break
+                
+            // Victory lifts: Create the victory lift and watch this scene and the player.
+            case .victoryLift:
+                let location = map.userData?.object(forKey: "exitsTo") as? String ?? ""
+                self.victoryLift = TestVictoryLiftElement(toLocation: location, node: newTileNode, view: self.view)
+                break
+                
+            // Unknown: Disregard.
+            case .unknown:
+                break
+                
+            // Default (wall): Add to list of walls.
+            default:
+                self.walls?.append(newTileNode)
+                break
             }
+            
+            
+            // Add the node as a child
+            self.addChild(newTileNode)
+            
+            // Fix the position again
+            newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,
+                                           y: newTileNode.position.y + tileMapPosition.y)
         }
-        
         // Assign the player and any goo
         self.deadlyElements = self.deadlyElements ?? [] + deadlyElementList
         self.playerNode = player
@@ -209,10 +233,6 @@ class TestchamberScene: SKScene {
     func configureInputSchematic(_ map: SKTileMapNode) {
         
         // Set some constants
-        let tileMapSize = map.tileSize
-        let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * tileMapSize.width
-        let halfHeight = CGFloat(map.numberOfRows) / 2.0 * tileMapSize.height
-        let tileMapPosition = map.position
         let isExitLayout = map.name?.contains("exitLayout")
         
         // Grab the antline tilemap, if it exists.
@@ -227,149 +247,146 @@ class TestchamberScene: SKScene {
         var cube: TestWeightedStorageCubeElement?
         
         //Iterate over every antline element
-        for antlineY in 0 ..< antlineTilemap.numberOfColumns {
-            for antlineX in 0 ..< antlineTilemap.numberOfRows {
-                if let antlineDefinition = antlineTilemap.tileDefinition(atColumn: antlineX, row: antlineY) {
-                    // Get the antline type.
-                    let antlineType = Antline.getAntlineType(byDefinition: antlineDefinition.name!)
-                                                            
-                    // Gather the textures
-                    let antlineTextures = antlineDefinition.textures
-                    let antlineTexture = antlineTextures[0]
-                    
-                    // Calculate the tile's position
-                    let antlineX = CGFloat(antlineX) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
-                    let antlineY = CGFloat(antlineY) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
-                    
-                    // Create the new node.
-                    let antlineNode = SKSpriteNode(texture: antlineTexture)
-                    
-                    // Set some basic properties.
-                    antlineNode.isHidden = false
-                    antlineNode.position = CGPoint(x: antlineX, y: antlineY)
-                    antlineNode.zPosition = -1
-                    antlineNode.lightingBitMask = 0b0001
-                    
-                    // Create a new Antline object and add it to the antline list.
-                    let newAntline = Antline(inputs: [],
-                                             node: antlineNode,
-                                             type: antlineType,
-                                             direction: Antline.determineAntlineDirection(tileDefinition: antlineDefinition))
-                    antlines.append(newAntline)
-                    self.addChild(antlineNode)
-                                        
-                    // Fix the position again
-                    antlineNode.position = CGPoint(x: antlineNode.position.x + tileMapPosition.x,
-                                                   y: antlineNode.position.y + tileMapPosition.y)
-                }
-            }
+        self.parseTileMap(antlineTilemap) { antlineDefinition, coordinate, tileMapSize, halfWidth, halfHeight, tileMapPosition in
+            
+            let x = coordinate.x
+            let y = coordinate.y
+            
+            let antlineType = Antline.getAntlineType(byDefinition: antlineDefinition.name!)
+                                                    
+            // Gather the textures
+            let antlineTextures = antlineDefinition.textures
+            let antlineTexture = antlineTextures[0]
+            
+            // Calculate the tile's position
+            let antlineX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+            let antlineY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+            
+            // Create the new node.
+            let antlineNode = SKSpriteNode(texture: antlineTexture)
+            
+            // Set some basic properties.
+            antlineNode.isHidden = false
+            antlineNode.position = CGPoint(x: antlineX, y: antlineY)
+            antlineNode.zPosition = -1
+            antlineNode.lightingBitMask = 0b0001
+            
+            // Create a new Antline object and add it to the antline list.
+            let newAntline = Antline(inputs: [],
+                                     node: antlineNode,
+                                     type: antlineType,
+                                     direction: Antline.determineAntlineDirection(tileDefinition: antlineDefinition))
+            antlines.append(newAntline)
+            self.addChild(antlineNode)
+                                
+            // Fix the position again
+            antlineNode.position = CGPoint(x: antlineNode.position.x + tileMapPosition.x,
+                                           y: antlineNode.position.y + tileMapPosition.y)
+            
         }
         
-        
         // Iterate over every item in the parent tilemap.
-        for y in 0 ..< map.numberOfColumns {
-            for x in 0 ..< map.numberOfRows {
-                
-                if let tileDefinition = map.tileDefinition(atColumn: y, row: x) {
-                    
-                    // Get the type of element
-                    let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
-                    
-                    // Gather the textures
-                    let tileTextures = tileDefinition.textures
-                    let firstTexture = tileTextures[0]
-                    
-                    // Calculate the tile's position
-                    let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
-                    let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
-                    
-                    // Create the new node.
-                    var newTileNode = SKSpriteNode(texture: firstTexture)
-                    
-                    // Set some basic properties.
-                    newTileNode.isHidden = false
-                    newTileNode.position = CGPoint(x: nodeX, y: nodeY)
-                    newTileNode.zPosition = 0
-                    newTileNode.lightingBitMask = 0b0001
-                    
-                    switch elementType {
-                    case .cube:
-                        newTileNode = TestWeightedStorageCubeElement(atPosition: CGPoint(x: nodeX, y: nodeY))
-                        cube = newTileNode as? TestWeightedStorageCubeElement
-                        break
-                    case .door:
-                        if isExitLayout! {
-                            if self.exitDoor == nil {
-                                self.exitDoor = TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal"))
-                            }
-                        } else {
-                            outputs.append(TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal")))
-                            print(outputs)
-                        }
-                        break
-                    case .weightedButton:
-                        var button: TestWeightedButtonElement?
-                        
-                        if isExitLayout! {
-                            button = TestWeightedButtonElement(connectsTo: .toExit, node: newTileNode, antlines: antlines)
-                            self.exitDoor?.addInput(button!)
-                        } else {
-                            button = TestWeightedButtonElement(connectsTo: .toElement, node: newTileNode, antlines: antlines)
-                        }
-                        
-                        inputs.append(button!)
-                        for antline in antlines {
-                            antline.addInput(button!)
-                        }
-                        
-                        for output in outputs {
-                            output.addInput(button!)
-                        }
-                        break
-                    case .pedestalButton:
-                        var button: TestPedestalButton?
-                        let direction = TestPedestalButton.getPedestalDirection(forButtonDefinition: tileDefinition)
-                        
-                        if isExitLayout! {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
-                                                        connectsTo: .toExit,
-                                                        node: newTileNode,
-                                                        antlines: antlines,
-                                                        inDirection: direction)
-                            self.exitDoor?.addInput(button!)
-                        } else {
-                            button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
-                                                        connectsTo: .toElement,
-                                                        node: newTileNode,
-                                                        antlines: antlines,
-                                                        inDirection: direction)
-                        }
-                        
-                        for antline in antlines {
-                            antline.addInput(button!)
-                        }
-                        
-                        for output in outputs {
-                            output.addInput(button!)
-                        }
-                        
-                        inputs.append(button!)
-                        
-                    case .cubeSpawner:
-                        let spawner = TestCubeSpawnerElement(inputs: inputs, node: newTileNode, existingCube: cube)
-                        outputs.append(spawner)
-                    default:
-                        break
+        self.parseTileMap(map) { tileDefinition, coordinate, tileMapSize, halfWidth, halfHeight, tileMapPosition in
+            
+            let x = coordinate.x
+            let y = coordinate.y
+            
+            // Get the type of element
+            let elementType = TestchamberStructure.getElementType(byDefinition: tileDefinition.name!)
+            
+            // Gather the textures
+            let tileTextures = tileDefinition.textures
+            let firstTexture = tileTextures[0]
+            
+            // Calculate the tile's position
+            let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+            let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+            
+            // Create the new node.
+            var newTileNode = SKSpriteNode(texture: firstTexture)
+            
+            // Set some basic properties.
+            newTileNode.isHidden = false
+            newTileNode.position = CGPoint(x: nodeX, y: nodeY)
+            newTileNode.zPosition = 0
+            newTileNode.lightingBitMask = 0b0001
+            
+            switch elementType {
+            case .cube:
+                newTileNode = TestWeightedStorageCubeElement(atPosition: CGPoint(x: nodeX, y: nodeY))
+                cube = newTileNode as? TestWeightedStorageCubeElement
+                break
+            case .door:
+                if isExitLayout! {
+                    if self.exitDoor == nil {
+                        self.exitDoor = TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal"))
                     }
-                                        
-                    self.addChild(newTileNode)
-                    
-                    // Fix the position again
-                    newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,
-                                                   y: newTileNode.position.y + tileMapPosition.y)
-                    }
+                } else {
+                    outputs.append(TestDoorElement(inputs: inputs, node: newTileNode, isMetalWall: tileDefinition.name!.contains("Metal")))
+                    print(outputs)
+                }
+                break
+            case .weightedButton:
+                var button: TestWeightedButtonElement?
                 
+                if isExitLayout! {
+                    button = TestWeightedButtonElement(connectsTo: .toExit, node: newTileNode, antlines: antlines)
+                    self.exitDoor?.addInput(button!)
+                } else {
+                    button = TestWeightedButtonElement(connectsTo: .toElement, node: newTileNode, antlines: antlines)
+                }
+                
+                inputs.append(button!)
+                for antline in antlines {
+                    antline.addInput(button!)
+                }
+                
+                for output in outputs {
+                    output.addInput(button!)
+                }
+                break
+            case .pedestalButton:
+                var button: TestPedestalButton?
+                let direction = TestPedestalButton.getPedestalDirection(forButtonDefinition: tileDefinition)
+                
+                if isExitLayout! {
+                    button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                connectsTo: .toExit,
+                                                node: newTileNode,
+                                                antlines: antlines,
+                                                inDirection: direction)
+                    self.exitDoor?.addInput(button!)
+                } else {
+                    button = TestPedestalButton(timeoutAfter: map.userData?.object(forKey: "buttonTimeout") as? Double,
+                                                connectsTo: .toElement,
+                                                node: newTileNode,
+                                                antlines: antlines,
+                                                inDirection: direction)
+                }
+                
+                for antline in antlines {
+                    antline.addInput(button!)
+                }
+                
+                for output in outputs {
+                    output.addInput(button!)
+                }
+                
+                inputs.append(button!)
+                
+            case .cubeSpawner:
+                let spawner = TestCubeSpawnerElement(inputs: inputs, node: newTileNode, existingCube: cube)
+                outputs.append(spawner)
+            default:
+                break
             }
+                                
+            self.addChild(newTileNode)
+            
+            // Fix the position again
+            newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,
+                                           y: newTileNode.position.y + tileMapPosition.y)
+            
         }
         
         // Add the inputs and outputs
