@@ -55,6 +55,13 @@ class TestchamberScene: SKScene {
     var playerNode: Player?
     
     /**
+     Any portals placed on the map.
+     
+     These can either be pre-determined from a `predeterminedPortalLayout` or self-generated from the player.
+     */
+    var portals: (Portal?, Portal?)
+    
+    /**
      A list containing the inputs in this testchamber.
      */
     var inputs: [TestInputElement]?
@@ -398,6 +405,45 @@ class TestchamberScene: SKScene {
         map.removeFromParent()
     }
     
+    /**
+     Takes a pre-determined portal layout and sets up these portals in the testchamber.
+     
+     - Important:
+        There should only be _two_ portals in this tilemap.
+     
+     - Parameters:
+        - map: The `SKTileMapNode` to "parse" for portals.
+     */
+    func configurePortalsFromTilemap(_ map: SKTileMapNode) {
+        var portals = [Portal]()
+        
+        self.parseTileMap(map) { tileDefinition, coordinate, tileMapSize, halfWidth, halfHeight, tileMapPosition in
+            
+            let x = coordinate.x
+            let y = coordinate.y
+            
+            let portalType = try! Portal.getPortalColor(textureName: tileDefinition.name!)
+            let portalDirection = Portal.getPortalDirection(fromTile: tileDefinition)
+            
+            let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+            let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+            
+            let portalNode = Portal(color: portalType, facing: portalDirection, sibling: nil)
+            
+            portalNode.position = CGPoint(x: nodeX, y: nodeY)
+            portals.append(portalNode)
+            self.addChild(portalNode)
+        }
+        
+        portals.first?.connectedSibling = portals.last
+        portals.last?.connectedSibling = portals.first
+        
+        self.portals = (portals.first, portals.last)
+        print(self.portals)
+        
+        map.removeFromParent()
+    }
+    
     // MARK: Overrides
     
     
@@ -541,6 +587,11 @@ class TestchamberScene: SKScene {
         // Start developing the input layers
         for layout in children.filter({ ($0.name?.starts(with: "input_") ?? false) }) {
             self.configureInputSchematic((layout as? SKTileMapNode)!)
+        }
+        
+        // If there is a pre-determined portal layer, parse it.
+        if childNode(withName: "predeterminedPortalLayout") != nil {
+            self.configurePortalsFromTilemap(childNode(withName: "predeterminedPortalLayout") as! SKTileMapNode)
         }
         
     }

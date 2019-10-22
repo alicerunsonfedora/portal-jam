@@ -49,8 +49,9 @@ class Portal: SKSpriteNode {
      - Parameters:
         - fromTile: The tile definition to check against
      */
-    static func getPortalDirection(fromTile: SKTileDefinition) {
+    static func getPortalDirection(fromTile: SKTileDefinition) -> PortalDirection {
         // TODO: Implement this stub method
+        return .west
     }
     
     /**
@@ -86,6 +87,8 @@ class Portal: SKSpriteNode {
         let portalTexture = SKTexture(imageNamed: portalTextureName)
         
         super.init(texture: portalTexture, color: NSColor.clear, size: portalTexture.size())
+        
+        self.zPosition = 5
     }
     
     required init?(coder aDecoder: NSCoder) {
