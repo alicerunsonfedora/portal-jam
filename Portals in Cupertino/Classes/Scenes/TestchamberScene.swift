@@ -133,6 +133,7 @@ class TestchamberScene: SKScene {
         
         // Create an empty goo array
         var deadlyElementList = [TestDeadlyElement]()
+        var walls = [SKSpriteNode]()
         var player: Player?
         
         self.parseTileMap(map){ tileDefinition, coordinate, tileMapSize, halfWidth, halfHeight, tileMapPosition in
@@ -213,7 +214,7 @@ class TestchamberScene: SKScene {
                 
             // Default (wall): Add to list of walls.
             default:
-                self.walls?.append(newTileNode)
+                walls.append(newTileNode)
                 break
             }
             
@@ -227,8 +228,8 @@ class TestchamberScene: SKScene {
         }
         // Assign the player and any goo
         self.deadlyElements = self.deadlyElements ?? [] + deadlyElementList
+        self.walls = self.walls ?? [] + walls
         self.playerNode = player
-        
     }
     
     /**
@@ -274,7 +275,7 @@ class TestchamberScene: SKScene {
             // Set some basic properties.
             antlineNode.isHidden = false
             antlineNode.position = CGPoint(x: antlineX, y: antlineY)
-            antlineNode.zPosition = -1
+            antlineNode.zPosition = -5
             antlineNode.lightingBitMask = 0b0001
             
             // Create a new Antline object and add it to the antline list.

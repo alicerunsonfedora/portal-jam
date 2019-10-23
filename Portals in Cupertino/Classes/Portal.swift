@@ -26,6 +26,26 @@ class Portal: SKSpriteNode {
      */
     var facing: PortalDirection
     
+    func getNeighbors(inLayout: [SKNode]) -> [SKNode] {
+        var neighbors = [SKNode]()
+        
+        print(inLayout)
+        
+        let positions = [
+            CGPoint(x: position.x, y: position.y + 128),
+            CGPoint(x: position.x, y: position.y - 128),
+            CGPoint(x: position.x - 128, y: position.y),
+            CGPoint(x: position.x + 128, y: position.y)]
+        
+        for wall in inLayout {
+            if positions.contains(wall.position) {
+                neighbors.append(wall)
+            }
+        }
+        
+        return neighbors
+    }
+    
     /**
      Get the portal's color from the texture name.
      - Parameters:
@@ -117,7 +137,7 @@ class Portal: SKSpriteNode {
         default:
             break
         }
-        
+                
     }
     
     required init?(coder aDecoder: NSCoder) {
