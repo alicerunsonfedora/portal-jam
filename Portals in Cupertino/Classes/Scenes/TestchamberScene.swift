@@ -117,6 +117,8 @@ class TestchamberScene: SKScene {
             }
         }
         
+        map.removeFromParent()
+        
     }
     
     /**
@@ -226,9 +228,6 @@ class TestchamberScene: SKScene {
         // Assign the player and any goo
         self.deadlyElements = self.deadlyElements ?? [] + deadlyElementList
         self.playerNode = player
-        
-        // Remove the tilemap
-        map.removeFromParent()
         
     }
     
@@ -400,9 +399,6 @@ class TestchamberScene: SKScene {
         self.inputs = (self.inputs ?? []) + inputs
         self.outputs = (self.outputs ?? []) + outputs
         
-        // Finally, remove the tilemaps
-        antlineTilemap.removeFromParent()
-        map.removeFromParent()
     }
     
     /**
@@ -439,9 +435,6 @@ class TestchamberScene: SKScene {
         portals.last?.connectedSibling = portals.first
         
         self.portals = (portals.first, portals.last)
-        print(self.portals)
-        
-        map.removeFromParent()
     }
     
     // MARK: Overrides
