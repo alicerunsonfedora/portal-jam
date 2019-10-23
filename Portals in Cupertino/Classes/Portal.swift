@@ -26,6 +26,12 @@ class Portal: SKSpriteNode {
      */
     var facing: PortalDirection
     
+    /**
+     Gets the portal's neighboring tiles.
+     - Parameters:
+        - inLayout: The list of walls to check.
+     - Returns: A list of `SKNode` that are the portal's neighbors
+     */
     func getNeighbors(inLayout: [SKNode]) -> [SKNode] {
         var neighbors = [SKNode]()
         
@@ -44,6 +50,23 @@ class Portal: SKSpriteNode {
         }
         
         return neighbors
+    }
+    
+    /**
+     Gets the inverse rotation as defined by the portal's texture.
+     - Returns: The proper angle in radians (`CGFloat`).
+     */
+    func getInverseLocation() -> CGFloat {
+        switch facing {
+        case .south:
+            return .pi
+        case .west:
+            return .pi / 2
+        case .east:
+            return 3 * .pi / 2
+        default:
+            return 2 * .pi
+        }
     }
     
     /**
