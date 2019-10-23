@@ -46,12 +46,29 @@ class Portal: SKSpriteNode {
     
     /**
      Gets the direction the portal is facing.
+     
+     The direction is typically flipped from the texture. For example, if a portal is facing `east`, the portal will appear on the _left_ side of the node texture.
+     
      - Parameters:
         - fromTile: The tile definition to check against
      */
     static func getPortalDirection(fromTile: SKTileDefinition) -> PortalDirection {
-        // TODO: Implement this stub method
-        return .west
+        
+        // The texture's rotation is opposite to what you would expect since the portal is at the
+        // bottom of the image.
+        
+        switch fromTile.rotation {
+        case .rotation0:
+            return .south
+        case .rotation90:
+            return .east
+        case .rotation180:
+            return .north
+        case .rotation270:
+            return .west
+        default:
+            return .south
+        }
     }
     
     /**
@@ -89,6 +106,18 @@ class Portal: SKSpriteNode {
         super.init(texture: portalTexture, color: NSColor.clear, size: portalTexture.size())
         
         self.zPosition = 5
+        
+        switch facing {
+        case .north:
+            self.zRotation = .pi
+        case .east:
+            self.zRotation = .pi / 2
+        case .west:
+            self.zRotation = 3 * .pi / 2
+        default:
+            break
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
