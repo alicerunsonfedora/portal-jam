@@ -37,7 +37,7 @@ class TestGooElement: TestDeadlyElement {
         super.init(damage: 100, node: node, player: player)
         
         self.elementNode.physicsBody = nil
-        self.elementNode.zPosition = -5
+        self.elementNode.zPosition = -4
     }
     
 }
