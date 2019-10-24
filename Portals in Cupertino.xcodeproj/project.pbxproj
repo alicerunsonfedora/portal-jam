@@ -18,6 +18,8 @@
 		BF1ABC7C234E78040095E5DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1ABC7B234E78040095E5DC /* ViewController.swift */; };
 		BF1ABC7E234E78090095E5DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC7D234E78090095E5DC /* Assets.xcassets */; };
 		BF1ABC81234E78090095E5DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF1ABC7F234E78090095E5DC /* Main.storyboard */; };
+		BF23C35423624328000BEBD5 /* Template.sks in Resources */ = {isa = PBXBuildFile; fileRef = BF23C35323624328000BEBD5 /* Template.sks */; };
+		BF23C3562362432F000BEBD5 /* Gap.sks in Resources */ = {isa = PBXBuildFile; fileRef = BF23C3552362432F000BEBD5 /* Gap.sks */; };
 		BF286CE52358B2F300542A19 /* TestWeightedStorageCubeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF286CE42358B2F300542A19 /* TestWeightedStorageCubeElement.swift */; };
 		BF5C17D2235398500026C1C2 /* Sample.sks in Resources */ = {isa = PBXBuildFile; fileRef = BF5C17D1235398500026C1C2 /* Sample.sks */; };
 		BF79949923565F1E006F95C3 /* TestWeightedButtonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */; };
@@ -64,6 +66,8 @@
 		BF1ABC83234E78090095E5DC /* Portals_in_Cupertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Portals_in_Cupertino.entitlements; sourceTree = "<group>"; };
 		BF1ABC89234E78D50095E5DC /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		BF1ABC8A234E78D50095E5DC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BF23C35323624328000BEBD5 /* Template.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Template.sks; sourceTree = "<group>"; };
+		BF23C3552362432F000BEBD5 /* Gap.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Gap.sks; sourceTree = "<group>"; };
 		BF286CE42358B2F300542A19 /* TestWeightedStorageCubeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedStorageCubeElement.swift; sourceTree = "<group>"; };
 		BF5C17D1235398500026C1C2 /* Sample.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Sample.sks; sourceTree = "<group>"; };
 		BF79949823565F1E006F95C3 /* TestWeightedButtonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedButtonElement.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 		BFAFB7AA2353D44C008249FC /* Testchambers */ = {
 			isa = PBXGroup;
 			children = (
+				BF23C3552362432F000BEBD5 /* Gap.sks */,
+				BF23C35323624328000BEBD5 /* Template.sks */,
 				BFC857912361E4AE006D5EA8 /* Start.sks */,
 				BF5C17D1235398500026C1C2 /* Sample.sks */,
 			);
@@ -326,6 +332,7 @@
 				BFD2A764235CCA5F005D00EC /* Dead.sks in Resources */,
 				BFD9E16D235A546300FD688E /* Vaporize.sks in Resources */,
 				BFFC1986235CDF8000F0D3A9 /* MainMenu.sks in Resources */,
+				BF23C3562362432F000BEBD5 /* Gap.sks in Resources */,
 				BFCBF1B5235E2ABF00EA1890 /* Layout.sks in Resources */,
 				BFCBF1B2235E2ABF00EA1890 /* Elements.sks in Resources */,
 				BFC857922361E4AE006D5EA8 /* Start.sks in Resources */,
@@ -334,6 +341,7 @@
 				BFCBF1B7235E2AD800EA1890 /* Portals.sks in Resources */,
 				BFCBF1B4235E2ABF00EA1890 /* Signage.sks in Resources */,
 				BFCBF1B3235E2ABF00EA1890 /* Antlines.sks in Resources */,
+				BF23C35423624328000BEBD5 /* Template.sks in Resources */,
 				BF1ABC81234E78090095E5DC /* Main.storyboard in Resources */,
 				BFD9E16F235A552900FD688E /* VaporizeTest.sks in Resources */,
 			);
