@@ -20,18 +20,18 @@ class ViewController: NSViewController {
         var fileName = "MainMenu"
         
         if CommandLine.arguments.count > 1 {
-            if CommandLine.arguments[1] == "--skip-menu" {
+            
+            if CommandLine.arguments.contains("--run-test") {
+                let nextIndex = CommandLine.arguments.firstIndex(of: "--run-test")! + 1
                 
-                if CommandLine.arguments.contains("--run-test") {
-                    let nextIndex = CommandLine.arguments.firstIndex(of: "--run-test")! + 1
-                    
-                    if nextIndex < CommandLine.arguments.count {
-                        fileName = CommandLine.arguments[nextIndex]
-                    }
-                    
-                } else {
-                    fileName = "Sample"
+                if nextIndex < CommandLine.arguments.count {
+                    fileName = CommandLine.arguments[nextIndex]
                 }
+                
+            }
+            
+            if CommandLine.arguments.contains("--skip-menu") {
+                fileName = "Sample"
             }
         }
         
