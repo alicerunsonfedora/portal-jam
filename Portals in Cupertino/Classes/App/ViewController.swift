@@ -23,7 +23,12 @@ class ViewController: NSViewController {
             if CommandLine.arguments[1] == "--skip-menu" {
                 
                 if CommandLine.arguments.contains("--run-test") {
-                    fileName = CommandLine.arguments[CommandLine.arguments.firstIndex(of: "--run-test")! + 1]
+                    let nextIndex = CommandLine.arguments.firstIndex(of: "--run-test")! + 1
+                    
+                    if nextIndex < CommandLine.arguments.count {
+                        fileName = CommandLine.arguments[nextIndex]
+                    }
+                    
                 } else {
                     fileName = "Sample"
                 }
