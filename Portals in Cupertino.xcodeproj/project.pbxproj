@@ -26,6 +26,7 @@
 		BF7994A623566BD7006F95C3 /* TestDoorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7994A523566BD7006F95C3 /* TestDoorElement.swift */; };
 		BFAFB7A92353C9D0008249FC /* TestchamberScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */; };
 		BFC272E62357794600139E30 /* TestWeightedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC272E52357794600139E30 /* TestWeightedElement.swift */; };
+		BFC857922361E4AE006D5EA8 /* Start.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC857912361E4AE006D5EA8 /* Start.sks */; };
 		BFCBF1B2235E2ABF00EA1890 /* Elements.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1AE235E2ABF00EA1890 /* Elements.sks */; };
 		BFCBF1B3235E2ABF00EA1890 /* Antlines.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1AF235E2ABF00EA1890 /* Antlines.sks */; };
 		BFCBF1B4235E2ABF00EA1890 /* Signage.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFCBF1B0235E2ABF00EA1890 /* Signage.sks */; };
@@ -71,6 +72,7 @@
 		BF7994A523566BD7006F95C3 /* TestDoorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDoorElement.swift; sourceTree = "<group>"; };
 		BFAFB7A82353C9D0008249FC /* TestchamberScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestchamberScene.swift; sourceTree = "<group>"; };
 		BFC272E52357794600139E30 /* TestWeightedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeightedElement.swift; sourceTree = "<group>"; };
+		BFC857912361E4AE006D5EA8 /* Start.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Start.sks; sourceTree = "<group>"; };
 		BFCBF1AE235E2ABF00EA1890 /* Elements.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Elements.sks; sourceTree = "<group>"; };
 		BFCBF1AF235E2ABF00EA1890 /* Antlines.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Antlines.sks; sourceTree = "<group>"; };
 		BFCBF1B0235E2ABF00EA1890 /* Signage.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Signage.sks; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		BFAFB7AA2353D44C008249FC /* Testchambers */ = {
 			isa = PBXGroup;
 			children = (
+				BFC857912361E4AE006D5EA8 /* Start.sks */,
 				BF5C17D1235398500026C1C2 /* Sample.sks */,
 			);
 			path = Testchambers;
@@ -325,6 +328,7 @@
 				BFFC1986235CDF8000F0D3A9 /* MainMenu.sks in Resources */,
 				BFCBF1B5235E2ABF00EA1890 /* Layout.sks in Resources */,
 				BFCBF1B2235E2ABF00EA1890 /* Elements.sks in Resources */,
+				BFC857922361E4AE006D5EA8 /* Start.sks in Resources */,
 				BF1ABC7E234E78090095E5DC /* Assets.xcassets in Resources */,
 				BF5C17D2235398500026C1C2 /* Sample.sks in Resources */,
 				BFCBF1B7235E2AD800EA1890 /* Portals.sks in Resources */,

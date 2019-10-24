@@ -21,7 +21,7 @@ class MainMenuUIScene: SKScene {
         
         switch touchedNode {
         case startButton:
-            self.view?.presentScene(SKScene(fileNamed: "Sample")!, transition: SKTransition.fade(with: NSColor.black, duration: 1.0))
+            self.view?.presentScene(SKScene(fileNamed: "Start")!, transition: SKTransition.fade(with: NSColor.black, duration: 1.0))
         case quitButton:
             exit(0)
         default:
