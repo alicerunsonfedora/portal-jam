@@ -81,7 +81,7 @@ class TestchamberScene: SKScene {
      */
     var victoryLift: TestVictoryLiftElement?
     
-    // MARK: Tile Map Configurations
+    // MARK: Tile Map HOF
     
     /**
      Parses through a tilemap and perform an action on each tile node.
@@ -103,12 +103,14 @@ class TestchamberScene: SKScene {
      This function should also be void, meaning that there isn't a return statement.
      */
     func parseTileMap(_ map: SKTileMapNode, parse: ((SKTileDefinition, CGPoint, CGSize, CGFloat, CGFloat, CGPoint) -> Void)) {
+        
         // Grab the position and the size of the tilemap for reference
         let mapSize = map.tileSize
         let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * mapSize.width
         let halfHeight = CGFloat(map.numberOfRows) / 2.0 * mapSize.height
         let mapPosition = map.position
         
+        // Iterate over every column and row in the tilemap and parse it accordingly.
         for y in 0 ..< map.numberOfColumns {
             for x in 0 ..< map.numberOfRows {
                 if let tileDefinition = map.tileDefinition(atColumn: y, row: x) {
@@ -117,10 +119,17 @@ class TestchamberScene: SKScene {
             }
         }
         
+        // Create a blank tileset and assign it to the map. This should prevent memory leaks.
+        let blankGroup: [SKTileGroup] = []
+        let blankTileset = SKTileSet(tileGroups: blankGroup)
+        map.tileSet = blankTileset
+        
+        // Finally, remove the map from the scene.
         map.removeFromParent()
         
     }
     
+    // MARK: Tile Map (Layout)
     /**
      Generate all of the appropriate sprite nodes from the layout's tile map.
      
@@ -232,6 +241,7 @@ class TestchamberScene: SKScene {
         self.playerNode = player
     }
     
+    // MARK: Tile Map (Elements)
     /**
      Takes a schematic and adds any inputs and outputs to the current layout.
      - Parameters:
@@ -402,6 +412,7 @@ class TestchamberScene: SKScene {
         
     }
     
+    // MARK: Tile Map (Portals)
     /**
      Takes a pre-determined portal layout and sets up these portals in the testchamber.
      
@@ -436,6 +447,30 @@ class TestchamberScene: SKScene {
         portals.last?.connectedSibling = portals.first
         
         self.portals = (portals.first, portals.last)
+    }
+    
+    // MARK: Tile Map (Everything Else)
+    func configureNodesFromTileMap(_ map: SKTileMapNode) {
+        self.parseTileMap(map) { tileDefinition, coordinate, tileMapSize, halfWidth, halfHeight, tileMapPosition in
+            
+            let x = coordinate.x
+            let y = coordinate.y
+            
+            let nodeX = CGFloat(y) * tileMapSize.width - halfWidth + (tileMapSize.width / 2)
+            let nodeY = CGFloat(x) * tileMapSize.height - halfHeight + (tileMapSize.height / 2)
+            
+            let nodeTextures = tileDefinition.textures
+            let nodeTexture = nodeTextures[0]
+            
+            let newTileNode = SKSpriteNode(texture: nodeTexture)
+            newTileNode.position = CGPoint(x: nodeX, y: nodeY)
+            newTileNode.isHidden = false
+            newTileNode.zPosition = map.zPosition
+            
+            self.addChild(newTileNode)
+            newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,
+                                           y: newTileNode.position.y + tileMapPosition.y)
+        }
     }
     
     // MARK: Overrides
@@ -571,6 +606,12 @@ class TestchamberScene: SKScene {
         
         // Set up the camera
         self.cameraNode = childNode(withName: "playerCamera") as? SKCameraNode
+        
+        // Start developing the background layout
+        guard let backgroundLayout = childNode(withName: "backgroundLayout") as? SKTileMapNode else {
+            fatalError("Background layout is missing. Aborting...")
+        }
+        self.configureNodesFromTileMap(backgroundLayout)
 
         // Start developing the room layout
         guard let roomLayout = childNode(withName: "roomLayout") as? SKTileMapNode else {
@@ -586,6 +627,15 @@ class TestchamberScene: SKScene {
         // If there is a pre-determined portal layer, parse it.
         if childNode(withName: "predeterminedPortalLayout") != nil {
             self.configurePortalsFromTilemap(childNode(withName: "predeterminedPortalLayout") as! SKTileMapNode)
+        }
+        
+        // Parse remaining nodes
+        if childNode(withName: "floodDecorLayout") != nil {
+            self.configureNodesFromTileMap(childNode(withName: "floodDecorLayout") as! SKTileMapNode)
+        }
+        
+        if childNode(withName: "decorLayout") != nil {
+            self.configureNodesFromTileMap(childNode(withName: "decorLayout") as! SKTileMapNode)
         }
         
     }
