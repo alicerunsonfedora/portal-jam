@@ -11,21 +11,21 @@ import SpriteKit
 
 class UIScene: SKScene {
     
-    var previousScene: SKScene?
+    var previousScene: String?
     
     func goBack() {
-        self.view?.presentScene(previousScene!, transition: SKTransition.fade(with: NSColor.black, duration: 2.0))
+        self.view?.presentScene(SKScene(fileNamed: previousScene!)!, transition: SKTransition.fade(with: NSColor.black, duration: 2.0))
     }
     
     override func didMove(to view: SKView) {
         
         let prevSceneName = self.userData?.object(forKey: "previousScene") as! String
         
-        guard let previousScene = SKScene(fileNamed: prevSceneName) else {
+        guard SKScene(fileNamed: prevSceneName) != nil else {
             fatalError("Failed to get the previous scene. Was this not set?")
         }
         
-        self.previousScene = previousScene
+        self.previousScene = prevSceneName
         
     }
     

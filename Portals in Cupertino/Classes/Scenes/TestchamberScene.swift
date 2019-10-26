@@ -81,7 +81,7 @@ class TestchamberScene: SKScene {
      */
     var victoryLift: TestVictoryLiftElement?
     
-    // MARK: Tile Map Configurations
+    // MARK: Tile Map HOF
     
     /**
      Parses through a tilemap and perform an action on each tile node.
@@ -103,12 +103,14 @@ class TestchamberScene: SKScene {
      This function should also be void, meaning that there isn't a return statement.
      */
     func parseTileMap(_ map: SKTileMapNode, parse: ((SKTileDefinition, CGPoint, CGSize, CGFloat, CGFloat, CGPoint) -> Void)) {
+        
         // Grab the position and the size of the tilemap for reference
         let mapSize = map.tileSize
         let halfWidth = CGFloat(map.numberOfColumns) / 2.0 * mapSize.width
         let halfHeight = CGFloat(map.numberOfRows) / 2.0 * mapSize.height
         let mapPosition = map.position
         
+        // Iterate over every column and row in the tilemap and parse it accordingly.
         for y in 0 ..< map.numberOfColumns {
             for x in 0 ..< map.numberOfRows {
                 if let tileDefinition = map.tileDefinition(atColumn: y, row: x) {
@@ -117,10 +119,17 @@ class TestchamberScene: SKScene {
             }
         }
         
+        // Create a blank tileset and assign it to the map. This should prevent memory leaks.
+        let blankGroup: [SKTileGroup] = []
+        let blankTileset = SKTileSet(tileGroups: blankGroup)
+        map.tileSet = blankTileset
+        
+        // Finally, remove the map from the scene.
         map.removeFromParent()
         
     }
     
+    // MARK: Tile Map Configurations
     /**
      Generate all of the appropriate sprite nodes from the layout's tile map.
      
