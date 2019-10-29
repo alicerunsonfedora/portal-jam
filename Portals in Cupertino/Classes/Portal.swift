@@ -25,6 +25,24 @@ class Portal: SKSpriteNode {
      The direction the portal is facing.
      */
     var facing: PortalDirection
+        
+    func teleportToSibling(player: Player?) {
+        if player != nil {
+            if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! {
+                let pos = connectedSibling?.position
+                player!.run(SKAction.move(to: pos!, duration: 0.01))
+                player?.zRotation = (self.connectedSibling?.getInverseRotation())!
+            }
+        }
+    }
+    
+    func isCloseTo(player: Player) -> Bool {
+        let dx = pow((player.position.x - self.position.x), 2)
+        let dy = pow((player.position.y - self.position.y), 2)
+        let distance = sqrt(dx + dy)
+        
+        return distance <= 15
+    }
     
     /**
      Gets the portal's neighboring tiles.
@@ -56,7 +74,7 @@ class Portal: SKSpriteNode {
      Gets the inverse rotation as defined by the portal's texture.
      - Returns: The proper angle in radians (`CGFloat`).
      */
-    func getInverseLocation() -> CGFloat {
+    func getInverseRotation() -> CGFloat {
         switch facing {
         case .south:
             return .pi
@@ -149,7 +167,11 @@ class Portal: SKSpriteNode {
         super.init(texture: portalTexture, color: NSColor.clear, size: portalTexture.size())
         
         self.zPosition = 5
+        self.physicsBody = SKPhysicsBody(texture: portalTexture, alphaThreshold: 0.9, size: portalTexture.size())
+        self.physicsBody?.isDynamic = false
+        self.physicsBody?.affectedByGravity = false
         
+                
         switch facing {
         case .north:
             self.zRotation = .pi
