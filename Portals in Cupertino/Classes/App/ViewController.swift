@@ -36,10 +36,7 @@ class ViewController: NSViewController {
                 // Present the scene
                 if let view = self.skView {
                     view.presentScene(sceneNode)
-                    
                     view.ignoresSiblingOrder = true
-                    view.showsPhysics = true
-                    
 //                    view.showsFPS = true
 //                    view.showsNodeCount = true
                 }

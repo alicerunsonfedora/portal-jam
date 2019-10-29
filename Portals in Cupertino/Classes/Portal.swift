@@ -25,23 +25,36 @@ class Portal: SKSpriteNode {
      The direction the portal is facing.
      */
     var facing: PortalDirection
-        
+    
+    /**
+     Teleport the player node to this portal's sibling if possible. The player must be in range of the portal and colliding with it.
+     - Parameters:
+        - player: The `Player` node to teleport.
+     */
     func teleportToSibling(player: Player?) {
-        if player != nil {
-            if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! {
-                let pos = connectedSibling?.position
-                player!.run(SKAction.move(to: pos!, duration: 0.01))
-                player?.zRotation = (self.connectedSibling?.getInverseRotation())!
+        if connectedSibling != nil {
+            if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! && player!.isCloseTo(node: self) {
+                var pos = self.connectedSibling?.position
+                let offset: CGFloat = 32.0
+                
+                switch connectedSibling!.facing {
+                case .north:
+                    pos!.y += offset
+                    break
+                case .south:
+                    pos!.y -= offset
+                    break
+                case .west:
+                    pos!.x -= offset
+                    break
+                case .east:
+                    pos!.x += offset
+                }
+                
+                player!.position = pos!
+                player?.zRotation = (self.connectedSibling?.getRotation())!
             }
         }
-    }
-    
-    func isCloseTo(player: Player) -> Bool {
-        let dx = pow((player.position.x - self.position.x), 2)
-        let dy = pow((player.position.y - self.position.y), 2)
-        let distance = sqrt(dx + dy)
-        
-        return distance <= 15
     }
     
     /**
@@ -81,6 +94,23 @@ class Portal: SKSpriteNode {
         case .west:
             return .pi / 2
         case .east:
+            return 3 * .pi / 2
+        default:
+            return 2 * .pi
+        }
+    }
+    
+    /**
+     Gets the rotation as defined by the portal's texture.
+     - Returns: The proper angle in radians (`CGFloat`).
+     */
+    func getRotation() -> CGFloat {
+        switch facing {
+        case .north:
+            return .pi
+        case .east:
+            return .pi / 2
+        case .west:
             return 3 * .pi / 2
         default:
             return 2 * .pi
@@ -170,6 +200,7 @@ class Portal: SKSpriteNode {
         self.physicsBody = SKPhysicsBody(texture: portalTexture, alphaThreshold: 0.9, size: portalTexture.size())
         self.physicsBody?.isDynamic = false
         self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.restitution = 0
         
                 
         switch facing {
