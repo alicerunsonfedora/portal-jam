@@ -505,8 +505,6 @@ class TestchamberScene: SKScene {
             //Moves player forward to the direction they're facing
             playerNode?.moveTo(direction: CGPoint(x:(playerNode?.position.x)! - sin(playerNode!.zRotation) * 10,
                                                   y:(playerNode?.position.y)! + cos(playerNode!.zRotation) * 10))
-            portals.0!.teleportToSibling(player: self.playerNode)
-            portals.1!.teleportToSibling(player: self.playerNode)
 
         case kVK_ANSI_S:
             //Moves player
@@ -542,6 +540,10 @@ class TestchamberScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Update the camera's position
         cameraNode?.position = playerNode!.position
+        
+        portals.1!.teleportToSibling(player: self.playerNode)
+        portals.0!.teleportToSibling(player: self.playerNode)
+
         
         // Display the "dead" scene if the player is dead
         if (self.playerNode?.isDead)! {
