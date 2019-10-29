@@ -37,6 +37,18 @@ class Player: TestWeightedElement {
     var isDead: Bool = false
     
     /**
+     Determine whether the player's rotation is parallel to an angle, offset by a margin of approximation.
+     - Parameters:
+        - angle: The angle to check against
+        - margin: The margin of approximation. Defaults to `10`.
+     */
+    func isApproximatelyParallelTo(angle: CGFloat, margin: CGFloat = 10) -> Bool {
+        let min = self.zRotation - margin
+        let max = self.zRotation + margin
+        return self.zRotation >= min && self.zRotation <= max
+    }
+    
+    /**
      Determine if the player is close to an item.
      - Parameters:
         - node: The node to check for closeness

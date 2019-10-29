@@ -32,38 +32,54 @@ class Portal: SKSpriteNode {
         - player: The `Player` node to teleport.
      */
     func teleportToSibling(player: Player?) {
-        if connectedSibling != nil {
-            if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! && player!.isCloseTo(node: self) {
-                var pos = self.connectedSibling?.position
-                let offset: CGFloat = 32.0
-                var actionX: CGFloat = 0
-                var actionY: CGFloat = 0
-                
-                switch connectedSibling!.facing {
-                case .north:
-                    pos!.y += offset
-                    actionY = -1 * offset / 4
-                    break
-                case .south:
-                    pos!.y -= offset
-                    actionY = offset / 4
-                    break
-                case .west:
-                    pos!.x -= offset
-                    actionX = offset / 4
-                    break
-                case .east:
-                    pos!.x += offset
-                    actionX = -1 * offset / 4
-                }
-                
-                player!.position = pos!
-                player?.zRotation = (self.connectedSibling?.getRotation())!
-                player?.run(SKAction.moveBy(x: actionX, y: actionY, duration: 1.5))
+        
+        if self.isPortalEntryValid(player: player) {
+            var pos = self.connectedSibling?.position
+            let offset: CGFloat = 32.0
+            
+            switch connectedSibling!.facing {
+            case .north:
+                pos!.y += offset
+                break
+            case .south:
+                pos!.y -= offset
+                break
+            case .west:
+                pos!.x -= offset
+                break
+            case .east:
+                pos!.x += offset
             }
+            
+            player!.position = pos!
+            player?.zRotation = (self.connectedSibling?.getRotation())!
         }
     }
     
+    func isPortalEntryValid(player: Player?) -> Bool {
+        if connectedSibling != nil {
+            let portalBody = self.physicsBody
+            guard let playerBody = player?.physicsBody else { return false }
+            if player!.isCloseTo(node: self) && (portalBody?.allContactedBodies().contains(playerBody))! {
+                switch self.facing {
+                case .north:
+                    return player!.isApproximatelyParallelTo(angle: .pi / 2, margin: 5) || player!.isApproximatelyParallelTo(angle: 3 * .pi / 2, margin: 5)
+                case .south:
+                    return player!.isApproximatelyParallelTo(angle: .pi / 2, margin: 5) || player!.isApproximatelyParallelTo(angle: 3 * .pi / 2, margin: 5)
+                case .west:
+                    return player!.isApproximatelyParallelTo(angle: .pi, margin: 5) || player!.isApproximatelyParallelTo(angle: 2 * .pi, margin: 5)
+                case .east:
+                    return player!.isApproximatelyParallelTo(angle: .pi, margin: 5) || player!.isApproximatelyParallelTo(angle: 2 * .pi, margin: 5)
+                }
+            } else {
+                return false
+            }
+            
+        } else {
+            return false
+        }
+    }
+        
     /**
      Gets the portal's neighboring tiles.
      - Parameters:
