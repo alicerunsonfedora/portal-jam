@@ -36,23 +36,30 @@ class Portal: SKSpriteNode {
             if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! && player!.isCloseTo(node: self) {
                 var pos = self.connectedSibling?.position
                 let offset: CGFloat = 32.0
+                var actionX: CGFloat = 0
+                var actionY: CGFloat = 0
                 
                 switch connectedSibling!.facing {
                 case .north:
                     pos!.y += offset
+                    actionY = -1 * offset / 4
                     break
                 case .south:
                     pos!.y -= offset
+                    actionY = offset / 4
                     break
                 case .west:
                     pos!.x -= offset
+                    actionX = offset / 4
                     break
                 case .east:
                     pos!.x += offset
+                    actionX = -1 * offset / 4
                 }
                 
                 player!.position = pos!
                 player?.zRotation = (self.connectedSibling?.getRotation())!
+                player?.run(SKAction.moveBy(x: actionX, y: actionY, duration: 1.5))
             }
         }
     }
