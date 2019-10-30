@@ -219,10 +219,16 @@ class TestchamberScene: SKScene {
                 
             // Unknown: Disregard.
             case .unknown:
+                
+                if tileDefinition.name! == "Glass" {
+                    newTileNode.normalTexture = SKTexture(imageNamed: "Glass_Normal")
+                }
+                
                 break
                 
             // Default (wall): Add to list of walls.
             default:
+                newTileNode.normalTexture = SKTexture(imageNamed: "Wall_Normal")
                 walls.append(newTileNode)
                 break
             }
@@ -466,6 +472,16 @@ class TestchamberScene: SKScene {
             newTileNode.position = CGPoint(x: nodeX, y: nodeY)
             newTileNode.isHidden = false
             newTileNode.zPosition = map.zPosition
+            newTileNode.lightingBitMask = 0b0001
+            
+            switch tileDefinition.name! {
+            case "Concrete_Floor":
+                newTileNode.normalTexture = SKTexture(imageNamed: "Concrete_Floor_Normal")
+            case "Metal_Floor":
+                newTileNode.normalTexture = SKTexture(imageNamed: "Metal_Floor_Normal")
+            default:
+                break
+            }
             
             self.addChild(newTileNode)
             newTileNode.position = CGPoint(x: newTileNode.position.x + tileMapPosition.x,

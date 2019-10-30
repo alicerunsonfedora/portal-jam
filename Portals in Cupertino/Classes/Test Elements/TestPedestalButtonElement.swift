@@ -67,6 +67,9 @@ class TestPedestalButton: TestInputElement {
         
         super.init(connectsTo: connectsTo, node: node, textureName: "Pedestal_Button", antlines: antlines)
         
+        self.elementNode.lightingBitMask = 0b0001
+        self.elementNode.normalTexture = SKTexture(imageNamed: "Pedestal_Button_Normal")
+        
         switch inDirection {
         case .west:
             self.elementNode.zRotation = .pi / 2

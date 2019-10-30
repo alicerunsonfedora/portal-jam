@@ -37,6 +37,7 @@ class TestWeightedStorageCubeElement : TestWeightedElement {
         self.position = atPosition
         self.zPosition = 3
         self.lightingBitMask = 0b0001
+        self.normalTexture = SKTexture(imageNamed: "Weighted_Cube_Normal")
         
         self.physicsBody = SKPhysicsBody(texture: weightedCubeTexture, alphaThreshold: 0.9, size: weightedCubeTexture.size())
         self.physicsBody?.restitution = 0

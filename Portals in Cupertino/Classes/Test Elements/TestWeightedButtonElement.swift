@@ -42,7 +42,8 @@ class TestWeightedButtonElement: TestInputElement {
      */
     init(connectsTo: TestInputType, node: SKSpriteNode, antlines: [Antline]?) {
         super.init(connectsTo: connectsTo, node: node, textureName: "Weighted_Button", antlines: antlines)
-        
+        self.elementNode.normalTexture = SKTexture(imageNamed: "Weighted_Button_Normal")
+        self.elementNode.lightingBitMask = 0b0001
     }
     
 }
