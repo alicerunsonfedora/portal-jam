@@ -56,7 +56,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--run-test Sample"
+            argument = "--run-test Start"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
