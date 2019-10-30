@@ -30,7 +30,7 @@ class ViewController: NSViewController {
                 
             }
             
-            if CommandLine.arguments.contains("--skip-menu") {
+            if CommandLine.arguments.contains("--skip-menu") && fileName == "MainMenu" {
                 fileName = "Sample"
             }
         }

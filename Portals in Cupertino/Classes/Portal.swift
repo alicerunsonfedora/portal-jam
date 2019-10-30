@@ -60,17 +60,8 @@ class Portal: SKSpriteNode {
         if connectedSibling != nil {
             let portalBody = self.physicsBody
             guard let playerBody = player?.physicsBody else { return false }
-            if player!.isCloseTo(node: self) && (portalBody?.allContactedBodies().contains(playerBody))! {
-                switch self.facing {
-                case .north:
-                    return player!.isApproximatelyParallelTo(angle: .pi / 2, margin: 5) || player!.isApproximatelyParallelTo(angle: 3 * .pi / 2, margin: 5)
-                case .south:
-                    return player!.isApproximatelyParallelTo(angle: .pi / 2, margin: 5) || player!.isApproximatelyParallelTo(angle: 3 * .pi / 2, margin: 5)
-                case .west:
-                    return player!.isApproximatelyParallelTo(angle: .pi, margin: 5) || player!.isApproximatelyParallelTo(angle: 2 * .pi, margin: 5)
-                case .east:
-                    return player!.isApproximatelyParallelTo(angle: .pi, margin: 5) || player!.isApproximatelyParallelTo(angle: 2 * .pi, margin: 5)
-                }
+            if player!.isCloseTo(node: self) {
+                return player!.isFacing(node: self) && (portalBody?.allContactedBodies().contains(playerBody))!
             } else {
                 return false
             }
