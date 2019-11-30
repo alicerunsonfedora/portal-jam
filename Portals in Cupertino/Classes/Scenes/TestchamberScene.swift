@@ -521,6 +521,7 @@ class TestchamberScene: SKScene {
             }
             
             if self.inputs != nil {
+                print(self.inputs)
                 for input in self.inputs! {
                     if input is TestPedestalButton {
                         let pedestalButton = input as! TestPedestalButton

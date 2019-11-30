@@ -33,7 +33,7 @@ class Portal: SKSpriteNode {
      */
     func teleportToSibling(player: Player?) {
         if connectedSibling != nil {
-            if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! && player!.isCloseTo(node: self) {
+            if (self.physicsBody?.allContactedBodies().contains(player!.physicsBody!))! && player!.isCloseTo(node: self)  {
                 var pos = self.connectedSibling?.position
                 let offset: CGFloat = 32.0
                 

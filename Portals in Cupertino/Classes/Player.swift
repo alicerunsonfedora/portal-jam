@@ -57,11 +57,15 @@ class Player: TestWeightedElement {
      - Returns: Boolean dictating whether the player is facing an item
      */
     func isFacing(node: SKNode) -> Bool {
-        let dx = node.position.x - self.position.x
-        let dy = node.position.y - self.position.y
-        let theta = atan2f(Float(dy), Float(dx))
-        
-        return abs(CGFloat(theta) - self.zRotation) < 10
+        if self.isCloseTo(node: node) {
+            let dx = node.position.x - self.position.x
+            let dy = node.position.y - self.position.y
+            let theta = atan2f(Float(dy), Float(dx))
+            print(CGFloat(theta) , self.zRotation)
+            return abs(CGFloat(theta) - self.zRotation) < 0.1745329
+        } else {
+            return false
+        }
     }
     
     /**
